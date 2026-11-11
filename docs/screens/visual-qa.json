@@ -1,0 +1,100 @@
+[
+  {
+    "name": "home",
+    "route": "/",
+    "width": 1440,
+    "height": 900,
+    "scrollWidth": 1440,
+    "overflow": false,
+    "images": [
+      {
+        "alt": "Official RATEENA SOUND logo",
+        "loaded": true
+      },
+      {
+        "alt": "Official RATEENA SOUND logo",
+        "loaded": true
+      }
+    ],
+    "errors": []
+  },
+  {
+    "name": "knowledge-01",
+    "route": "/flagship/knowledge/sound",
+    "width": 1440,
+    "height": 900,
+    "scrollWidth": 1440,
+    "overflow": false,
+    "images": [
+      {
+        "alt": "Official RATEENA SOUND logo",
+        "loaded": true
+      }
+    ],
+    "errors": []
+  },
+  {
+    "name": "architectural-proposal",
+    "route": "/flagship/study/architectural",
+    "width": 1440,
+    "height": 900,
+    "scrollWidth": 1440,
+    "overflow": false,
+    "images": [
+      {
+        "alt": "Official RATEENA SOUND logo",
+        "loaded": true
+      }
+    ],
+    "errors": []
+  },
+  {
+    "name": "mobile",
+    "route": "/",
+    "width": 390,
+    "height": 844,
+    "scrollWidth": 390,
+    "overflow": false,
+    "images": [
+      {
+        "alt": "Official RATEENA SOUND logo",
+        "loaded": true
+      },
+      {
+        "alt": "Official RATEENA SOUND logo",
+        "loaded": true
+      }
+    ],
+    "errors": []
+  },
+  {
+    "name": "knowledge-02-1",
+    "route": "/flagship/knowledge/static-comparison",
+    "width": 1440,
+    "height": 900,
+    "scrollWidth": 1440,
+    "overflow": false,
+    "images": [
+      {
+        "alt": "Official RATEENA SOUND logo",
+        "loaded": true
+      }
+    ],
+    "errors": []
+  },
+  {
+    "name": "geometry-calculator",
+    "route": "/flagship/study/geometry",
+    "width": 1440,
+    "height": 900,
+    "scrollWidth": 1440,
+    "overflow": false,
+    "images": [
+      {
+        "alt": "Official RATEENA SOUND logo",
+        "loaded": true
+      }
+    ],
+    "errors": []
+  }
+]

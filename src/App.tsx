@@ -300,20 +300,10 @@ function Home() {
                   {t("active")}
                 </span>
               </div>
-              <div className="facility-art" aria-hidden="true">
-                <svg viewBox="0 0 540 170">
-                  <g fill="none" stroke="currentColor" strokeWidth=".7">
-                    <path d="M35 112L237 35L492 91L281 162ZM35 112V82L237 5L492 61V91M237 5V35M281 132V162M35 82L281 132L492 61" />
-                    {Array.from({ length: 16 }, (_, i) => (
-                      <path
-                        key={i}
-                        d={`M${58 + i * 12} ${73 - i * 4.55}V${103 - i * 4.55}L${302 + i * 12} ${152 - i * 4.1}`}
-                      />
-                    ))}
-                  </g>
-                </svg>
-              </div>
               <div className="facility-card-content">
+                <span className="facility-index" aria-hidden="true">
+                  01
+                </span>
                 <h3>Flagship Studio</h3>
                 <p>
                   A focused recording facility.
@@ -335,19 +325,10 @@ function Home() {
                 <span className="phase-label">{t("phaseTwo")}</span>
                 <span className="future-tag">{t("future")}</span>
               </div>
-              <div className="facility-art" aria-hidden="true">
-                <svg viewBox="0 0 540 170">
-                  <g fill="none" stroke="currentColor" strokeWidth=".7">
-                    {Array.from({ length: 10 }, (_, i) => (
-                      <path
-                        key={i}
-                        d={`M${90 + i * 18} ${135 - i * 6}V${55 - i * 3}L${310 + i * 12} ${12 + i * 7}V${92 + i * 7}Z`}
-                      />
-                    ))}
-                  </g>
-                </svg>
-              </div>
               <div className="facility-card-content">
+                <span className="facility-index" aria-hidden="true">
+                  02
+                </span>
                 <h3>RATEENA Sound Center</h3>
                 <p>
                   A separate future facility.

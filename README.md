@@ -19,7 +19,7 @@ Vite serves `http://localhost:5173/rateena-sound-2/`. `npm run preview` serves t
 
 ## Implemented
 
-- Premium near-black navy interface, restrained metallic-gold flagship identity, separate cool-blue Phase Two identity, responsive desktop/tablet/mobile layouts, cyan SVG technical sketches and reduced-motion support.
+- Editorial luxury-audio identity: near-black surfaces, large high-contrast serif typography, restrained metallic-gold headlines, steel-blue Phase Two, oversized chapter numerals, square hairline frames, image-free facility panels, subtle staggered reveals and grain. Desktop/tablet/mobile layouts and reduced-motion support are retained.
 - Exactly two primary home sections: **Project Management** and **Technical Study & Knowledge**. Exactly two independent facility cards. No Knowledge top-level section or Studio Introduction page.
 - Project Management visibly **Under Construction**. Expandable empty structures for tasks, milestones, deliverables, dependencies, risks, budget, contractors, documents and approvals; no invented operational data.
 - Flagship opens directly on **Knowledge** and has exactly two main tabs. **Technical Study** opens directly on Architectural Proposal, independently of chapter completion.
@@ -84,7 +84,21 @@ Primary research identifiers: Sepmeyer (1965), <https://doi.org/10.1121/1.190934
 
 ## QA
 
-`npm run build` type-checks and compiles production assets. `npm test` runs Vitest geometry, schema and component interaction tests. DOM component tests are not a visual-browser inspection. The screenshot/browser hand-off, including the six required routes, is in `docs/SCREENSHOT-BRIEF.md`. A headless rasterisation retry is documented in `docs/QA-RESULTS.md`; DOM checks alone are not visual verification.
+`npm run build` type-checks and compiles production assets. `npm test` runs Vitest geometry, schema and component interaction tests. DOM component tests are not a visual-browser inspection. The screenshot/browser hand-off, including the six required routes, is in `docs/SCREENSHOT-BRIEF.md`. The visual redesign was rendered with Playwright’s isolated bundled Chromium. Desktop and mobile screenshots are in `docs/screens/` and were visually reviewed. The viewport matrix checks 320, 390, 768, 1024 and 1440 px across home, Knowledge, architectural proposal and geometry views, with no document overflow. See `docs/QA-RESULTS.md`.
+
+
+To reproduce visual QA (against the local production preview):
+
+```sh
+npx playwright install chromium
+npm run build
+npm run preview -- --port 4173
+# In another terminal:
+npm run test:visual
+npm run test:responsive
+```
+
+These scripts launch a fresh isolated headless test browser, not a saved desktop browser profile. Screenshots pause motion to capture the final layout consistently; normal CSS reveals remain enabled in the application.
 
 ## Static deployment preparation
 

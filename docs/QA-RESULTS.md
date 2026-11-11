@@ -1,42 +1,46 @@
-# QA results
+# QA results — editorial visual edition
 
 11 November 2026 — Africa/Cairo.
 
-## Builds and tests
+## Build and functional checks
 
-- Production build: PASS (`npm run build`, TypeScript + Vite).
+- Production build: PASS (`npm run build`).
 - Offline single-file build: PASS (`npm run build:offline`).
-- Vitest: PASS — 13 tests across metric geometry, schema integrity, navigation, room editing, static chapter and revision interactions.
-- DOM tests use reduced motion. They are not a visual-browser inspection.
-- Dependency audit: zero vulnerabilities reported by `npm audit --audit-level=moderate`.
+- Vitest: PASS — 13 tests across geometry, schema integrity, navigation, room editing, the static comparison and revision interactions.
+- Dependency audit: zero vulnerabilities.
+- Engineering content, data model, calculations, persistence keys and original logo are unchanged by this visual redesign. Existing local project data remains compatible.
+- Offline HTML has inlined JavaScript, CSS, logo and fonts; no external script or stylesheet references. Its embedded logo matches the original JPG byte-for-byte.
 
-## Official logo
+## Real browser visual verification — PASS
 
-The original supplied JPG is used for the shared header, home identity panel and favicon. Source pixels and design are unchanged; CSS crops only outer black margins and blends the background into the navy interface.
+Playwright's bundled Chromium / headless shell was installed with `npx playwright install chromium` and rendered the production build at `http://127.0.0.1:4173/rateena-sound-2/`. This succeeded, so Xvfb and stock-Chrome fallbacks were not required.
 
-Byte-for-byte checks confirm the normal build's JPG and the decoded offline image data URI match the supplied original (51,342 bytes). This confirms asset integration and integrity, not a visual browser inspection.
+Screenshots were opened and inspected, then the design was refined for stronger small-text contrast, larger explanations and facility names visible in the desktop first fold. Final captures pause motion for a stable final-state layout; normal app motion remains enabled. A native-resolution crop confirmed the gold app-bar title renders correctly.
 
-## Offline delivery
+Required captures:
 
-`/workspace/artifacts/RATEENA-SOUND-2.html` is self-contained: all JavaScript, CSS, the logo and bundled fonts are inline. An HTML asset check found no external script or stylesheet references. HashRouter supports direct local-file navigation. External engineering source links require internet if opened.
+- `docs/screens/home.png` — 1440 × 900
+- `docs/screens/knowledge-01.png` — 1440 × 900
+- `docs/screens/architectural-proposal.png` — 1440 × 900; Main Live Room selected
+- `docs/screens/mobile.png` — 390 × 844
 
-The source ZIP excludes node_modules, .git, dist, dist-offline and build caches.
+Additional reviewed captures:
 
-## Public deployment
+- `docs/screens/home-full.png`
+- `docs/screens/mobile-full.png`
+- `docs/screens/knowledge-02-1.png` — static comparison
+- `docs/screens/geometry-calculator.png`
 
-The owner approved public publication after initially requesting a private file. Only the new repository was created:
+Browser checks reported no uncaught page errors, no broken logo images and no horizontal document overflow. `visual-qa.json` records the six captured routes. `responsive-qa.json` records 20 passing layout checks: home, Knowledge, architectural proposal and geometry at widths 320, 390, 768, 1024 and 1440 px.
 
+The drafting canvas remains clean and empty. Chapter 02.1 remains static. Hierarchy and all technical qualifications are unchanged.
+
+## Delivery
+
+- Live application: https://deepershi8-art.github.io/rateena-sound-2/
 - Repository: https://github.com/deepershi8-art/rateena-sound-2
-- Live app: https://deepershi8-art.github.io/rateena-sound-2/
-- Initial successful workflow: https://github.com/deepershi8-art/rateena-sound-2/actions/runs/42975693505
-- Live HTML: HTTP 200.
-- Compiled JavaScript: HTTP 200; 457,835 bytes, asset `assets/index-BupqpVhw.js`.
-- The earlier Cairo application repository was not touched.
+- Standard build JS asset: `assets/index-De1porFL.js` (new versus the preceding `index-BupqpVhw.js`).
+- Offline edition: `/workspace/artifacts/RATEENA-SOUND-2.html`
+- Clean source archive: `/workspace/artifacts/rateena-sound-2-source.zip`
 
-A stale Git credential-helper path was corrected through the standard `gh auth setup-git` command before pushing. No credentials were extracted.
-
-## Screenshot limitation
-
-Headless Chrome capture stalled even for about:blank. The requested final single retry against `file:///workspace/artifacts/RATEENA-SOUND-2.html` used `--headless=new --no-sandbox --disable-gpu` and an OS-enforced 60-second timeout. It timed out (exit 124) without producing an image. The retry was not repeated. `docs/screens/` is empty; no screenshots or visual fixes are claimed.
-
-Official headless documentation checked: https://developer.chrome.com/docs/chromium/headless . See SCREENSHOT-BRIEF.md for the five core review routes plus geometry/mobile checks to perform in a functioning browser.
+Publishing uses the existing Pages workflow. No files or settings in the earlier Cairo application's repository were changed.

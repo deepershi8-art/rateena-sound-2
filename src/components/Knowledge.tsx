@@ -40,13 +40,20 @@ export function Knowledge() {
           <span>Illustrations, not simulations.</span>
         </div>
       </aside>
-      <article className="book-page">
+      <article className={`book-page ${isStatic ? "static-book" : ""}`}>
         <div className="section-kicker">
           <span>KNOWLEDGE / CHAPTER {c.number}</span>
           <span>FLAGSHIP STUDIO · PHASE ONE</span>
         </div>
-        <h1>{c.title}</h1>
-        <p className="chapter-subtitle">{c.subtitle}</p>
+        <div className="chapter-heading">
+          <span className="folio-number" aria-hidden="true">
+            {c.number}
+          </span>
+          <div>
+            <h1>{c.title}</h1>
+            <p className="chapter-subtitle">{c.subtitle}</p>
+          </div>
+        </div>
         <div className={`lesson ${isStatic ? "static-lesson" : ""}`}>
           <div className="drawing-surface">
             <div className="drawing-topline">

@@ -1,0 +1,122 @@
+[
+  {
+    "width": 320,
+    "scrollWidth": 320,
+    "overflow": false,
+    "route": "/"
+  },
+  {
+    "width": 320,
+    "scrollWidth": 320,
+    "overflow": false,
+    "route": "/flagship/knowledge/sound"
+  },
+  {
+    "width": 320,
+    "scrollWidth": 320,
+    "overflow": false,
+    "route": "/flagship/study/architectural"
+  },
+  {
+    "width": 320,
+    "scrollWidth": 320,
+    "overflow": false,
+    "route": "/flagship/study/geometry"
+  },
+  {
+    "width": 390,
+    "scrollWidth": 390,
+    "overflow": false,
+    "route": "/"
+  },
+  {
+    "width": 390,
+    "scrollWidth": 390,
+    "overflow": false,
+    "route": "/flagship/knowledge/sound"
+  },
+  {
+    "width": 390,
+    "scrollWidth": 390,
+    "overflow": false,
+    "route": "/flagship/study/architectural"
+  },
+  {
+    "width": 390,
+    "scrollWidth": 390,
+    "overflow": false,
+    "route": "/flagship/study/geometry"
+  },
+  {
+    "width": 768,
+    "scrollWidth": 768,
+    "overflow": false,
+    "route": "/"
+  },
+  {
+    "width": 768,
+    "scrollWidth": 768,
+    "overflow": false,
+    "route": "/flagship/knowledge/sound"
+  },
+  {
+    "width": 768,
+    "scrollWidth": 768,
+    "overflow": false,
+    "route": "/flagship/study/architectural"
+  },
+  {
+    "width": 768,
+    "scrollWidth": 768,
+    "overflow": false,
+    "route": "/flagship/study/geometry"
+  },
+  {
+    "width": 1024,
+    "scrollWidth": 1024,
+    "overflow": false,
+    "route": "/"
+  },
+  {
+    "width": 1024,
+    "scrollWidth": 1024,
+    "overflow": false,
+    "route": "/flagship/knowledge/sound"
+  },
+  {
+    "width": 1024,
+    "scrollWidth": 1024,
+    "overflow": false,
+    "route": "/flagship/study/architectural"
+  },
+  {
+    "width": 1024,
+    "scrollWidth": 1024,
+    "overflow": false,
+    "route": "/flagship/study/geometry"
+  },
+  {
+    "width": 1440,
+    "scrollWidth": 1440,
+    "overflow": false,
+    "route": "/"
+  },
+  {
+    "width": 1440,
+    "scrollWidth": 1440,
+    "overflow": false,
+    "route": "/flagship/knowledge/sound"
+  },
+  {
+    "width": 1440,
+    "scrollWidth": 1440,
+    "overflow": false,
+    "route": "/flagship/study/architectural"
+  },
+  {
+    "width": 1440,
+    "scrollWidth": 1440,
+    "overflow": false,
+    "route": "/flagship/study/geometry"
+  }
+]
