@@ -49,7 +49,7 @@ npm run build:offline
 
 This produces `dist-offline/index.html`: a self-contained application with inlined JavaScript, CSS, logo and bundled fonts. Open it directly in a modern browser using `file://`; no server or internet connection is required to use the app. Engineering source links naturally require internet if opened. HashRouter keeps navigation within the file.
 
-The delivered standalone copy is `/workspace/artifacts/RATEENA-SOUND-2.html`. Browser policies for local-file storage vary; JSON export/import remains the portable backup mechanism. To enable reliable shared persistence, use the hosted app or a local web server.
+The delivered standalone copy is `/workspace/artifacts/RATEENA-SOUND-2.html`; the complete source archive is `/workspace/artifacts/rateena-sound-2-source.zip` (no node_modules or build output). Browser policies for local-file storage vary; JSON export/import remains the portable backup mechanism. To enable reliable shared persistence, use the hosted app or a local web server.
 
 ## Future integration / not claimed implemented
 

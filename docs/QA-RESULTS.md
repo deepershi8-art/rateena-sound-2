@@ -1,18 +1,42 @@
 # QA results
 
-11 November 2026, Africa/Cairo.
+11 November 2026 — Africa/Cairo.
+
+## Builds and tests
 
 - Production build: PASS (`npm run build`, TypeScript + Vite).
-- Vitest: PASS — 13 tests across geometry, schema integrity and component-level navigation/editing/static-chapter/audit interactions.
-- DOM tests use a reduced-motion preference; they are not a visual rendering or animation test.
-- Dependency audit: 0 vulnerabilities reported by `npm audit --audit-level=moderate`.
-- Local Vite HTTP response: 200 at `http://localhost:5173/rateena-sound-2/`.
-- Screenshots: NOT RUN. Browser subagent tools are unavailable to this executor; its desktop policy prohibits Shell-driven browser automation. See SCREENSHOT-BRIEF.md for the exact hand-off.
-- Public deployment: NOT RUN. Public repository creation/publishing needs the owner's specific approval. The prepared Pages workflow has not been pushed or executed.
-- Official logo attachment: supplied path absent when checked; automatic asset-slot loading is ready. No substitute logo was invented.
+- Offline single-file build: PASS (`npm run build:offline`).
+- Vitest: PASS — 13 tests across metric geometry, schema integrity, navigation, room editing, static chapter and revision interactions.
+- DOM tests use reduced motion. They are not a visual-browser inspection.
+- Dependency audit: zero vulnerabilities reported by `npm audit --audit-level=moderate`.
 
-## Headless rasterisation follow-up
+## Official logo
 
-Direct CLI rendering of this app was attempted using `/usr/bin/google-chrome` (Chrome 156.0.8078.47), disposable profiles, `--headless --screenshot`, 1440×900 / 390×844 viewports and a virtual-time budget. The five renderers stalled without producing files and were stopped. A bounded retry with background services disabled also stalled. Even an independent `about:blank` screenshot with GPU disabled exceeded an OS-enforced 25-second timeout (exit 124). Thus this is not established as an application rendering defect. No screenshots or visual fixes are claimed.
+The original supplied JPG is used for the shared header, home identity panel and favicon. Source pixels and design are unchanged; CSS crops only outer black margins and blends the background into the navy interface.
 
-Official headless documentation checked: https://developer.chrome.com/docs/chromium/headless . Public reports describe similar headless capture hangs, but no reliable permitted fix was established in this environment.
+Byte-for-byte checks confirm the normal build's JPG and the decoded offline image data URI match the supplied original (51,342 bytes). This confirms asset integration and integrity, not a visual browser inspection.
+
+## Offline delivery
+
+`/workspace/artifacts/RATEENA-SOUND-2.html` is self-contained: all JavaScript, CSS, the logo and bundled fonts are inline. An HTML asset check found no external script or stylesheet references. HashRouter supports direct local-file navigation. External engineering source links require internet if opened.
+
+The source ZIP excludes node_modules, .git, dist, dist-offline and build caches.
+
+## Public deployment
+
+The owner approved public publication after initially requesting a private file. Only the new repository was created:
+
+- Repository: https://github.com/deepershi8-art/rateena-sound-2
+- Live app: https://deepershi8-art.github.io/rateena-sound-2/
+- Initial successful workflow: https://github.com/deepershi8-art/rateena-sound-2/actions/runs/42975693505
+- Live HTML: HTTP 200.
+- Compiled JavaScript: HTTP 200; 457,835 bytes, asset `assets/index-BupqpVhw.js`.
+- The earlier Cairo application repository was not touched.
+
+A stale Git credential-helper path was corrected through the standard `gh auth setup-git` command before pushing. No credentials were extracted.
+
+## Screenshot limitation
+
+Headless Chrome capture stalled even for about:blank. The requested final single retry against `file:///workspace/artifacts/RATEENA-SOUND-2.html` used `--headless=new --no-sandbox --disable-gpu` and an OS-enforced 60-second timeout. It timed out (exit 124) without producing an image. The retry was not repeated. `docs/screens/` is empty; no screenshots or visual fixes are claimed.
+
+Official headless documentation checked: https://developer.chrome.com/docs/chromium/headless . See SCREENSHOT-BRIEF.md for the five core review routes plus geometry/mobile checks to perform in a functioning browser.

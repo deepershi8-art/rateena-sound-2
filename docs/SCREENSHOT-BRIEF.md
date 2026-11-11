@@ -1,5 +1,5 @@
 # Browser QA hand-off
-This executor has no browser subagent tool. Its desktop skill prohibits Shell-driven Playwright/browser automation, so no browser screenshots or runtime rendering are claimed.
+No screenshots are currently available. Direct headless CLI capture stalled in this environment, including the requested 60-second retry against the standalone offline file. The app passes DOM interaction checks; visual rendering still needs review in a functioning browser.
 
 Use an authorised browser executor on the local app at http://localhost:5173/rateena-sound-2/ (start: npm run dev) and save to docs/screens:
 - home.png — /#/ at 1440×900
