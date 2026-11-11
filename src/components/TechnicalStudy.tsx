@@ -1,6 +1,9 @@
+import { useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { FolderOpen } from "lucide-react";
 import { ConceptPlanWorkspace } from "./ConceptPlanWorkspace";
+import { DesignBrief } from "./DesignBrief";
+import { ImageSlot } from "./ImageSlot";
 import { LegacyStudy, strategies as earlierStrategies } from "./LegacyStudy";
 import {
   Badge,
@@ -101,6 +104,17 @@ export function TechnicalStudy() {
   const oldRoute = ["programme", "geometry", "treatment", "decisions"].includes(
     section,
   );
+  useEffect(() => {
+    if (!sections.some(([id]) => id === section)) return;
+    const timer = setTimeout(
+      () =>
+        document
+          .getElementById(`study-${section}`)
+          ?.scrollIntoView({ block: "start" }),
+      120,
+    );
+    return () => clearTimeout(timer);
+  }, [section]);
   return (
     <div className="study-layout updated-study-layout">
       <aside className="study-index">
@@ -115,7 +129,7 @@ export function TechnicalStudy() {
             onClick={() => navigate("/flagship/study/architectural")}
           >
             <span>00</span>
-            <b>Flagship Studio Floor Plan</b>
+            <b>Design Brief & Floor Plan</b>
           </button>
           {sections.map(([id, name], i) => (
             <a
@@ -173,6 +187,12 @@ export function TechnicalStudy() {
           </>
         ) : (
           <>
+            <DesignBrief />
+            <ImageSlot
+              slotKey="flagship-owner-2d-plan"
+              title="Owner 2D plan"
+              placeholder="Owner 2D plan – to be uploaded"
+            />
             <ConceptPlanWorkspace />
             <CurrentProgramme />
             <section className="progressive-study">

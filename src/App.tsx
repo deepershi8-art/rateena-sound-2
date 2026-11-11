@@ -1,4 +1,4 @@
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import type { ReactNode } from "react";
 import {
   HashRouter,
@@ -7,6 +7,7 @@ import {
   NavLink,
   Link,
   Navigate,
+  useNavigate,
 } from "react-router-dom";
 import {
   ArrowUpRight,
@@ -35,6 +36,7 @@ import { roomMetrics } from "./lib/geometry";
 import { Brand, OfficialLogo } from "./components/Brand";
 import { Knowledge } from "./components/Knowledge";
 import { TechnicalStudy } from "./components/TechnicalStudy";
+import { ImageSlot } from "./components/ImageSlot";
 const modules = [
   "Tasks",
   "Milestones",
@@ -245,7 +247,8 @@ function Shell({ children }: { children: ReactNode }) {
     </div>
   );
 }
-function Home() {
+/** Retired from navigation (owner flow update t65u); retained for reference. */
+export function LegacyHome() {
   const { t } = useI18n();
   return (
     <Shell>
@@ -376,15 +379,199 @@ function Home() {
     </Shell>
   );
 }
+function Splash() {
+  const navigate = useNavigate();
+  const ref = useRef<HTMLElement>(null);
+  useEffect(() => ref.current?.focus(), []);
+  const go = () => navigate("/gateway");
+  return (
+    <main
+      ref={ref}
+      className="splash"
+      role="button"
+      tabIndex={0}
+      aria-label="RATEENA SOUND — enter"
+      onClick={go}
+      onKeyDown={(e) => {
+        if (e.key === "Enter" || e.key === " ") {
+          e.preventDefault();
+          go();
+        }
+      }}
+    >
+      <OfficialLogo className="splash-logo" />
+      <span className="splash-hint" aria-hidden="true">
+        Tap anywhere
+      </span>
+    </main>
+  );
+}
+function Gateway() {
+  return (
+    <Shell>
+      <main className="gateway">
+        <div className="section-kicker">RATEENA SOUND 2 / CHOOSE A PATH</div>
+        <div className="gateway-grid">
+          <Link to="/management" className="gateway-option management-option">
+            <span className="gateway-number">01</span>
+            <h1>Studio Management</h1>
+            <p>
+              The studio’s graphic plan — the future starting point for
+              room-by-room management.
+            </p>
+            <span className="gateway-cta">
+              Open plan <ArrowUpRight size={18} />
+            </span>
+          </Link>
+          <Link to="/rateena" className="gateway-option rateena-option">
+            <span className="gateway-number">02</span>
+            <h1>RATEENA SOUND</h1>
+            <p>
+              Flagship Studio and Center — knowledge, design brief and technical
+              study.
+            </p>
+            <span className="gateway-cta">
+              Explore projects <ArrowUpRight size={18} />
+            </span>
+          </Link>
+        </div>
+      </main>
+    </Shell>
+  );
+}
+/** Future: room hotspots (percent coordinates over the uploaded graphic plan). None defined yet. */
+export interface ManagementHotspot {
+  roomId: string;
+  x: number;
+  y: number;
+  w: number;
+  h: number;
+}
+const managementHotspots: ManagementHotspot[] = [];
+function StudioManagement() {
+  return (
+    <Shell>
+      <main className="studio-management">
+        <div className="management-bar">
+          <Link to="/gateway" className="back-link">
+            <ArrowLeft size={13} />
+            Gateway
+          </Link>
+          <h1>Studio Management</h1>
+        </div>
+        <ImageSlot
+          slotKey="studio-graphic-plan"
+          variant="full"
+          title="Studio graphic plan"
+          placeholder="Studio graphic plan – to be uploaded"
+          overlay={
+            <div
+              className="hotspot-layer"
+              data-hotspots={managementHotspots.length}
+              aria-hidden="true"
+            />
+          }
+        />
+      </main>
+    </Shell>
+  );
+}
+function RateenaSound() {
+  const { t } = useI18n();
+  return (
+    <Shell>
+      <main className="home rateena-projects">
+        <Link to="/gateway" className="back-link">
+          <ArrowLeft size={13} />
+          Gateway
+        </Link>
+        <section
+          className="facilities-section"
+          aria-labelledby="facilities-title"
+        >
+          <div className="home-section-heading">
+            <div className="section-number">02</div>
+            <BookOpen size={20} />
+            <h2 id="facilities-title">{t("studyKnowledge")}</h2>
+            <span className="small muted">TWO PROJECTS</span>
+          </div>
+          <div className="facility-grid">
+            <Link
+              to="/flagship/study/architectural"
+              className="facility-card flagship-card"
+            >
+              <div className="card-top">
+                <span className="phase-label">{t("phaseOne")}</span>
+                <span className="priority">
+                  <span />
+                  {t("active")}
+                </span>
+              </div>
+              <div className="facility-card-content">
+                <span className="facility-index" aria-hidden="true">
+                  01
+                </span>
+                <h3>
+                  <small className="project-prefix">RATEENA SOUND</small>
+                  FLAGSHIP STUDIO
+                </h3>
+                <p>
+                  A focused recording facility.
+                  <br />
+                  The science, the spaces and the design decisions.
+                </p>
+                <div className="facility-tags">
+                  <span>Knowledge book</span>
+                  <span>Technical study</span>
+                </div>
+              </div>
+              <div className="card-bottom">
+                <span>{t("open")}</span>
+                <ArrowUpRight size={20} />
+              </div>
+            </Link>
+            <Link to="/centre" className="facility-card centre-card">
+              <div className="card-top">
+                <span className="phase-label">{t("phaseTwo")}</span>
+                <span className="future-tag">{t("future")}</span>
+              </div>
+              <div className="facility-card-content">
+                <span className="facility-index" aria-hidden="true">
+                  02
+                </span>
+                <h3>
+                  <small className="project-prefix">RATEENA SOUND</small>CENTER
+                </h3>
+                <p>
+                  The future home of our other studio types
+                  <br />
+                  and specialised facilities.
+                </p>
+                <div className="facility-tags">
+                  <span>Independent facility</span>
+                  <span>Design pending</span>
+                </div>
+              </div>
+              <div className="card-bottom">
+                <span>{t("explore")}</span>
+                <ArrowUpRight size={20} />
+              </div>
+            </Link>
+          </div>
+        </section>
+      </main>
+    </Shell>
+  );
+}
 function Flagship() {
   const { t } = useI18n();
   return (
     <Shell>
       <div className="facility-bar">
         <div>
-          <Link to="/" className="back-link">
+          <Link to="/rateena" className="back-link">
             <ArrowLeft size={13} />
-            {t("home")}
+            RATEENA SOUND
           </Link>
           <div className="facility-title">
             <span className="gold-line" />
@@ -424,7 +611,7 @@ function Flagship() {
         <Route path="study/:section?" element={<TechnicalStudy />} />
         <Route
           path="*"
-          element={<Navigate to="/flagship/knowledge/sound" replace />}
+          element={<Navigate to="/flagship/study/architectural" replace />}
         />
       </Routes>
     </Shell>
@@ -435,16 +622,17 @@ function Centre() {
   return (
     <Shell>
       <main className="placeholder-page">
-        <Link className="back-link" to="/">
+        <Link className="back-link" to="/rateena">
           <ArrowLeft size={15} />
-          {t("back")}
+          RATEENA SOUND
         </Link>
         <div className="section-kicker blue">
           PHASE TWO / SEPARATE FUTURE FACILITY
         </div>
         <h1>RATEENA SOUND CENTER</h1>
         <p className="intro-text">
-          A distinct facility. Its own study, geometry and project record.
+          A distinct facility that will host RATEENA SOUND’s other types of
+          studios and facilities. Its own study, geometry and project record.
         </p>
         <div className="notice">
           Future integration. No room programme, design, schedule or performance
@@ -466,9 +654,10 @@ function Centre() {
               {m.name}
             </summary>
             <p>
-              Empty structure for Phase Two. Future integration; independent of
-              Flagship Studio. These are organizational placeholders, not
-              confirmed final facility specifications.
+              Reserved for the other types of studios and facilities the Center
+              will host. Future integration, independent of the Flagship Studio.
+              An organisational placeholder, not a confirmed facility
+              specification.
             </p>
             <EditableNote
               noteKey={`center:${m.name}`}
@@ -476,8 +665,8 @@ function Centre() {
             />
           </details>
         ))}
-        <Link className="text-button blue" to="/">
-          {t("back")}
+        <Link className="text-button blue" to="/rateena">
+          Back to RATEENA SOUND
           <ArrowRight size={15} />
         </Link>
       </main>
@@ -490,7 +679,10 @@ export default function App() {
       <LanguageProvider>
         <HashRouter>
           <Routes>
-            <Route path="/" element={<Home />} />
+            <Route path="/" element={<Splash />} />
+            <Route path="/gateway" element={<Gateway />} />
+            <Route path="/management" element={<StudioManagement />} />
+            <Route path="/rateena" element={<RateenaSound />} />
             <Route path="/flagship/*" element={<Flagship />} />
             <Route path="/centre" element={<Centre />} />
             <Route path="*" element={<Navigate to="/" replace />} />

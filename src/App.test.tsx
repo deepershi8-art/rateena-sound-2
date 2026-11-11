@@ -31,34 +31,109 @@ async function openRoute(path: string) {
   await waitFor(() => expect(window.location.hash).toContain(path));
 }
 describe("Application structure and interactions", () => {
-  it("has exactly two home sections and two independent facility links", async () => {
+  it("opens on a logo-only splash that continues to the gateway on tap or key", async () => {
     await openRoute("/");
-    expect(document.querySelectorAll("main.home>section")).toHaveLength(2);
+    const splash = document.querySelector(".splash") as HTMLElement;
+    expect(splash.querySelectorAll("img")).toHaveLength(1);
+    expect(splash.querySelectorAll("a,button,input,select")).toHaveLength(0);
+    expect(splash.textContent?.trim()).toBe("Tap anywhere");
+    fireEvent.click(splash);
+    await waitFor(() => expect(window.location.hash).toBe("#/gateway"));
+    expect(document.querySelectorAll(".gateway-option")).toHaveLength(2);
+    expect(
+      screen.getByRole("heading", { name: "Studio Management" }),
+    ).toBeTruthy();
+    expect(screen.getByRole("heading", { name: "RATEENA SOUND" })).toBeTruthy();
+    expect(document.documentElement.dir).not.toBe("rtl");
+  });
+  it("continues from the splash with the keyboard", async () => {
+    await openRoute("/");
+    fireEvent.keyDown(document.querySelector(".splash")!, { key: "Enter" });
+    await waitFor(() => expect(window.location.hash).toBe("#/gateway"));
+  });
+  it("shows only the studio graphic plan slot in Studio Management", async () => {
+    await openRoute("/management");
+    expect(
+      screen.getByText("Studio graphic plan – to be uploaded"),
+    ).toBeTruthy();
+    expect(screen.getByRole("button", { name: /Add image/ })).toBeTruthy();
+    expect(screen.queryByText("Under Construction")).toBeNull();
+    expect(screen.queryByText("Tasks")).toBeNull();
+  });
+  it("lists exactly the two RATEENA SOUND projects", async () => {
+    await openRoute("/rateena");
     expect(document.querySelectorAll(".facility-card")).toHaveLength(2);
-    expect(screen.getByText("Project Management")).toBeTruthy();
-    expect(screen.getByText("Under Construction")).toBeTruthy();
     expect(
       screen.getByRole("heading", { name: /RATEENA SOUND.*FLAGSHIP STUDIO/ }),
     ).toBeTruthy();
     expect(
       screen.getByRole("heading", { name: /RATEENA SOUND.*CENTER/ }),
     ).toBeTruthy();
-    expect(document.documentElement.dir).not.toBe("rtl");
+    expect(document.querySelector(".flagship-card")?.getAttribute("href")).toBe(
+      "#/flagship/study/architectural",
+    );
   });
-  it("opens the flagship on Knowledge with exactly two main tabs", async () => {
+  it("lands the flagship on the design brief and plan, with two main tabs", async () => {
     await openRoute("/flagship");
+    await waitFor(() =>
+      expect(window.location.hash).toBe("#/flagship/study/architectural"),
+    );
+    expect(document.querySelectorAll(".primary-tabs>a")).toHaveLength(2);
+    expect(screen.getByRole("heading", { name: /reasoning/ })).toBeTruthy();
+    expect(screen.getAllByText(/up to 25 musicians/).length).toBeGreaterThan(0);
+    expect(screen.getByText(/1 : 1.85 : 2.67/)).toBeTruthy();
+    expect(screen.getByText("Owner 2D plan – to be uploaded")).toBeTruthy();
+    expect(document.querySelectorAll("[data-window]")).toHaveLength(6);
+    expect(screen.queryByText("Studio Introduction")).toBeNull();
+  });
+  it("orders Knowledge chapters with appendices last and keeps progressive reveals", async () => {
+    await openRoute("/flagship/knowledge/sound");
     await waitFor(() =>
       expect(
         screen.getByRole("heading", { name: "Understanding Sound" }),
       ).toBeTruthy(),
     );
-    expect(document.querySelectorAll(".primary-tabs>a")).toHaveLength(2);
-    expect(document.querySelectorAll(".chapter-link")).toHaveLength(5);
-    expect(screen.queryByText("Studio Introduction")).toBeNull();
+    const titles = [...document.querySelectorAll(".chapter-link b")].map(
+      (b) => b.textContent,
+    );
+    expect(titles).toEqual([
+      "Understanding Sound",
+      "Stopping Sound — Isolation",
+      "Acoustic Treatment",
+      "HVAC & Conditioning",
+      "Equipment Infrastructure",
+      "Equipment",
+      "Appendix A — Acoustic Terminology",
+      "Appendix B — International Standards",
+    ]);
     fireEvent.click(
       screen.getByRole("button", { name: /Reveal next principle/ }),
     );
     expect(screen.getByText("Airborne transmission")).toBeTruthy();
+  });
+  it("shows the treatment cube with calculated axial modes", async () => {
+    await openRoute("/flagship/knowledge/acoustic-treatment");
+    await waitFor(() =>
+      expect(
+        screen.getByRole("heading", { name: "Acoustic Treatment" }),
+      ).toBeTruthy(),
+    );
+    expect(
+      screen.getByRole("heading", { name: "Reflections & standing waves" }),
+    ).toBeTruthy();
+    expect(
+      screen.getByRole("button", { name: /Length mode 1, 14.3 hertz/ }),
+    ).toBeTruthy();
+    expect(screen.getByText("Some clustering")).toBeTruthy();
+    fireEvent.change(screen.getByLabelText("Width in metres"), {
+      target: { value: "6" },
+    });
+    expect(
+      screen.getByRole("button", {
+        name: /Width mode 1, 28.6 hertz, coincident/,
+      }),
+    ).toBeTruthy();
+    expect(screen.getByText("Coincident modes")).toBeTruthy();
   });
   it("keeps the 02.1 lesson completely static", async () => {
     await openRoute("/flagship/knowledge/static-comparison");
@@ -148,7 +223,7 @@ describe("Application structure and interactions", () => {
   });
   it("does not overwrite corrupt saved browser data", async () => {
     localStorage.setItem("rateena-sound-2:v2", "{broken");
-    await openRoute("/");
+    await openRoute("/gateway");
     expect(localStorage.getItem("rateena-sound-2:v2")).toBe("{broken");
     expect(screen.getByRole("alert").textContent).toContain("left untouched");
   });

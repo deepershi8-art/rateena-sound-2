@@ -45,7 +45,7 @@ export const initialData: LegacyData = {
       length: 12,
       width: 7.42,
       height: 4.58,
-      capacity: "12–15 musicians",
+      capacity: "Up to 25 musicians (design target)",
       evidence: { ...initialEvidence },
     },
     {

@@ -1,0 +1,116 @@
+[
+  {
+    "device": "desktop",
+    "splash": {
+      "anim": "none",
+      "trans": "0s",
+      "share": 0.46225,
+      "buttons": 0
+    }
+  },
+  {
+    "device": "desktop",
+    "name": "splash",
+    "scrollWidth": 1440,
+    "width": 1440
+  },
+  {
+    "device": "desktop",
+    "name": "gateway",
+    "scrollWidth": 1440,
+    "width": 1440
+  },
+  {
+    "device": "desktop",
+    "name": "studio-management",
+    "scrollWidth": 1440,
+    "width": 1440
+  },
+  {
+    "device": "desktop",
+    "name": "rateena-projects",
+    "scrollWidth": 1440,
+    "width": 1440
+  },
+  {
+    "device": "desktop",
+    "name": "flagship-design-brief",
+    "scrollWidth": 1440,
+    "width": 1440
+  },
+  {
+    "device": "desktop",
+    "name": "flagship-plan-windows",
+    "scrollWidth": 1440,
+    "width": 1440
+  },
+  {
+    "device": "desktop",
+    "name": "knowledge-isolation",
+    "scrollWidth": 1440,
+    "width": 1440
+  },
+  {
+    "device": "desktop",
+    "name": "knowledge-cube-modes",
+    "scrollWidth": 1440,
+    "width": 1440
+  },
+  {
+    "device": "mobile",
+    "splash": {
+      "anim": "none",
+      "trans": "0s",
+      "share": 0.3911021919727963,
+      "buttons": 0
+    }
+  },
+  {
+    "device": "mobile",
+    "name": "splash",
+    "scrollWidth": 390,
+    "width": 390
+  },
+  {
+    "device": "mobile",
+    "name": "gateway",
+    "scrollWidth": 390,
+    "width": 390
+  },
+  {
+    "device": "mobile",
+    "name": "studio-management",
+    "scrollWidth": 390,
+    "width": 390
+  },
+  {
+    "device": "mobile",
+    "name": "rateena-projects",
+    "scrollWidth": 390,
+    "width": 390
+  },
+  {
+    "device": "mobile",
+    "name": "flagship-design-brief",
+    "scrollWidth": 390,
+    "width": 390
+  },
+  {
+    "device": "mobile",
+    "name": "flagship-plan-windows",
+    "scrollWidth": 390,
+    "width": 390
+  },
+  {
+    "device": "mobile",
+    "name": "knowledge-isolation",
+    "scrollWidth": 390,
+    "width": 390
+  },
+  {
+    "device": "mobile",
+    "name": "knowledge-cube-modes",
+    "scrollWidth": 390,
+    "width": 390
+  }
+]

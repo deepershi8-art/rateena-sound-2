@@ -1,3 +1,11 @@
+# QA results — navigation flow update (11 Nov 2026, Africa/Cairo)
+
+- `npm run build`: PASS. `npx tsc -b`: PASS. Prettier: PASS. `npm audit --omit=dev`: 0 vulnerabilities.
+- Vitest: PASS — 34 tests, including axial-mode maths (12 m → 14.29 Hz, default clustered pair, cube coincidence, node positions), flow routing (splash click/Enter → gateway, two gateway options, management slot only, two RATEENA SOUND projects, flagship lands on design brief, six windows, eight Knowledge chapters in order, treatment cube updates on slider change) and the capacity update.
+- `scripts/flow-qa.mjs` (Playwright Chromium, 1440 × 900 and 390 × 844): splash logo has no animation and no buttons, tap continues; no horizontal overflow; no page errors; cube canvas renders. Screens in `docs/screens/flow/` (desktop-*/mobile-* for splash, gateway, studio-management, rateena-projects, flagship-design-brief, flagship-plan-windows, knowledge-isolation, knowledge-cube-modes; plus desktop-plan-detail.png). All were opened and reviewed.
+- `scripts/responsive-qa.mjs`: 13 routes × 320/390/768/1024/1440 px — 65/65 without overflow.
+- `npm run test:visual`: true-scale geometry and progressive-reveal checks still PASS.
+
 # QA results — editorial visual edition
 
 11 November 2026 — Africa/Cairo.

@@ -9,7 +9,37 @@
     "width": 320,
     "scrollWidth": 320,
     "overflow": false,
+    "route": "/gateway"
+  },
+  {
+    "width": 320,
+    "scrollWidth": 320,
+    "overflow": false,
+    "route": "/management"
+  },
+  {
+    "width": 320,
+    "scrollWidth": 320,
+    "overflow": false,
+    "route": "/rateena"
+  },
+  {
+    "width": 320,
+    "scrollWidth": 320,
+    "overflow": false,
     "route": "/flagship/knowledge/sound"
+  },
+  {
+    "width": 320,
+    "scrollWidth": 320,
+    "overflow": false,
+    "route": "/flagship/knowledge/acoustic-treatment"
+  },
+  {
+    "width": 320,
+    "scrollWidth": 320,
+    "overflow": false,
+    "route": "/flagship/knowledge/hvac"
   },
   {
     "width": 320,
@@ -57,7 +87,37 @@
     "width": 390,
     "scrollWidth": 390,
     "overflow": false,
+    "route": "/gateway"
+  },
+  {
+    "width": 390,
+    "scrollWidth": 390,
+    "overflow": false,
+    "route": "/management"
+  },
+  {
+    "width": 390,
+    "scrollWidth": 390,
+    "overflow": false,
+    "route": "/rateena"
+  },
+  {
+    "width": 390,
+    "scrollWidth": 390,
+    "overflow": false,
     "route": "/flagship/knowledge/sound"
+  },
+  {
+    "width": 390,
+    "scrollWidth": 390,
+    "overflow": false,
+    "route": "/flagship/knowledge/acoustic-treatment"
+  },
+  {
+    "width": 390,
+    "scrollWidth": 390,
+    "overflow": false,
+    "route": "/flagship/knowledge/hvac"
   },
   {
     "width": 390,
@@ -105,7 +165,37 @@
     "width": 768,
     "scrollWidth": 768,
     "overflow": false,
+    "route": "/gateway"
+  },
+  {
+    "width": 768,
+    "scrollWidth": 768,
+    "overflow": false,
+    "route": "/management"
+  },
+  {
+    "width": 768,
+    "scrollWidth": 768,
+    "overflow": false,
+    "route": "/rateena"
+  },
+  {
+    "width": 768,
+    "scrollWidth": 768,
+    "overflow": false,
     "route": "/flagship/knowledge/sound"
+  },
+  {
+    "width": 768,
+    "scrollWidth": 768,
+    "overflow": false,
+    "route": "/flagship/knowledge/acoustic-treatment"
+  },
+  {
+    "width": 768,
+    "scrollWidth": 768,
+    "overflow": false,
+    "route": "/flagship/knowledge/hvac"
   },
   {
     "width": 768,
@@ -153,7 +243,37 @@
     "width": 1024,
     "scrollWidth": 1024,
     "overflow": false,
+    "route": "/gateway"
+  },
+  {
+    "width": 1024,
+    "scrollWidth": 1024,
+    "overflow": false,
+    "route": "/management"
+  },
+  {
+    "width": 1024,
+    "scrollWidth": 1024,
+    "overflow": false,
+    "route": "/rateena"
+  },
+  {
+    "width": 1024,
+    "scrollWidth": 1024,
+    "overflow": false,
     "route": "/flagship/knowledge/sound"
+  },
+  {
+    "width": 1024,
+    "scrollWidth": 1024,
+    "overflow": false,
+    "route": "/flagship/knowledge/acoustic-treatment"
+  },
+  {
+    "width": 1024,
+    "scrollWidth": 1024,
+    "overflow": false,
+    "route": "/flagship/knowledge/hvac"
   },
   {
     "width": 1024,
@@ -201,7 +321,37 @@
     "width": 1440,
     "scrollWidth": 1440,
     "overflow": false,
+    "route": "/gateway"
+  },
+  {
+    "width": 1440,
+    "scrollWidth": 1440,
+    "overflow": false,
+    "route": "/management"
+  },
+  {
+    "width": 1440,
+    "scrollWidth": 1440,
+    "overflow": false,
+    "route": "/rateena"
+  },
+  {
+    "width": 1440,
+    "scrollWidth": 1440,
+    "overflow": false,
     "route": "/flagship/knowledge/sound"
+  },
+  {
+    "width": 1440,
+    "scrollWidth": 1440,
+    "overflow": false,
+    "route": "/flagship/knowledge/acoustic-treatment"
+  },
+  {
+    "width": 1440,
+    "scrollWidth": 1440,
+    "overflow": false,
+    "route": "/flagship/knowledge/hvac"
   },
   {
     "width": 1440,

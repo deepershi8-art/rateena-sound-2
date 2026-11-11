@@ -43,3 +43,13 @@ Schema v2 stores a new eight-room concept programme separately from the original
 Room-in-Room is the studio-wide intent; Mass–Decoupling–Damping and floating construction are complementary. Wall/floor/ceiling principles are separate. Support types, loads, resonance, cavity depths and material build-ups require engineering; no universal springs or shared isolated raft are assumed.
 
 IEC 61672-1 / IEC 61260-1 describe relevant measurement instrumentation; ITU-R BS.1116 concerns subjective assessment of small audio impairments; EBU Tech 3276 concerns listening conditions. Scope checks used the IEC catalogue, ITU recommendation page and EBU publication page on 11 November 2026. Listing them is not a compliance assertion; applicable editions and methods require consultant review.
+
+### Navigation flow update — decisions (11 Nov 2026)
+
+- Ensemble capacity: up to 25 musicians is the owner’s design target and supersedes the earlier 12–15 reference. Saved data still holding the untouched old default is updated; an owner-edited value is kept. Layout, ventilation and egress for 25 are not validated.
+- Proportion: the live room is informed by golden-ratio proportioning, not equal to it. 4.50 : 8.33 : 12.00 normalises to 1 : 1.85 : 2.67 (φ = 1.618, φ² = 2.618 shown for reference).
+- Length: the low E of a bass guitar is 41.2 Hz; λ = 343 / 41.2 ≈ 8.33 m. The 12 m length exceeds one wavelength; this is a calculated explanation, not a prediction of low-frequency performance.
+- Cube spacing thresholds (coincident ≤ 1 %, clustered ≤ 5 % between modes on different axes) are illustrative teaching thresholds, not a standard. With the default room one pair clusters (L3 42.9 Hz vs W2 41.2 Hz), so the cube honestly reports “Some clustering”.
+- Glazing positions are proposed. Window widths (2.4 m live, 1.5 m lounge, 1.2 m percussion, 1.0 m bass/vocal) are typical drawing references; no acoustic rating, glass build-up or frame detail is specified. Lounge glazing is drawn on the control room’s bottom wall and the aligned lounge wall across the 1.2 m access strip.
+- Uploaded images (studio graphic plan, owner 2D plan, knowledge images) are stored only in the browser that uploaded them (IndexedDB). They are not in JSON backups and are not published. To publish a final graphic, send it and it can be committed.
+- Retired, not deleted: the nine Project Management modules (`LegacyHome` in `src/App.tsx`), the old chapter IDs (alias routes) and all earlier study content.

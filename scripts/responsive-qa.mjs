@@ -9,7 +9,12 @@ try {
   for (const width of [320, 390, 768, 1024, 1440]) {
     for (const route of [
       "/",
+      "/gateway",
+      "/management",
+      "/rateena",
       "/flagship/knowledge/sound",
+      "/flagship/knowledge/acoustic-treatment",
+      "/flagship/knowledge/hvac",
       "/flagship/study/architectural",
       "/flagship/study/geometry",
       "/flagship/knowledge/sound-isolation",

@@ -17,7 +17,19 @@ npm test
 
 Vite serves `http://localhost:5173/rateena-sound-2/`. `npm run preview` serves the production build. Routing uses `HashRouter`, so static hosting does not require route rewrites. Fonts are bundled locally; the application does not require third-party font requests.
 
-## Implemented — progressive existing-application update
+## Implemented — navigation flow update (11 Nov 2026)
+
+Brief preserved in `docs/UPDATE-2026-11-11-flow.md`.
+
+- **Splash** (`#/`): only the official logo on black, no motion, a tiny “Tap anywhere”. Click/tap anywhere, Enter or Space continues.
+- **Gateway** (`#/gateway`): Studio Management and RATEENA SOUND. The header logo returns here.
+- **Studio Management** (`#/management`): a single full-bleed slot, “Studio graphic plan – to be uploaded”. The owner can add/replace/remove a PNG/JPEG/WebP (≤ 15 MB) which is stored on that device in IndexedDB (not in JSON export, not published). A typed, empty hotspot layer is ready for future room links. The earlier nine Project Management modules are retired from navigation but retained in code (`LegacyHome`).
+- **RATEENA SOUND** (`#/rateena`): RATEENA SOUND FLAGSHIP STUDIO (gold) and RATEENA SOUND CENTER (blue). Center placeholders now describe a future home for other studio types and specialised facilities.
+- **Flagship** lands on **Technical Study**: a five-point Design Brief (proportion informed by — not equal to — the golden ratio, shown as H : W : L = 1 : 1.85 : 2.67; up to 25 musicians as the design target; length vs. low-E 41.2 Hz → 8.33 m at 343 m/s; height; central control room), an owner 2D-plan upload slot, then the unchanged true-scale plan, now with six proposed control-room windows (live, lounge, percussion, bass, vocal) labelled “proposed double / laminated glazing”, no rating.
+- **Knowledge** order: 01 Understanding Sound; 02 Stopping Sound — Isolation (mass, decoupling, floating, box-in-box + three-stage model); 03 Acoustic Treatment (absorption, diffusion, reflection + interactive 3D wireframe cube); 04 HVAC & Conditioning; 05 Equipment Infrastructure; 06 Equipment; Appendix A Terminology; Appendix B Standards. Every topic has a local image slot. Old deep links still resolve.
+- **3D cube**: canvas wireframe (gold/blue on navy), drag to orbit, a source emitting rays that reflect specularly, a selectable axial standing wave with nodes/antinodes, L/W/H sliders (default 12.00 / 8.33 / 4.50 m), first four axial modes per axis, coincident (≤ 1 %) / clustered (≤ 5 %) flags and spacing verdict. Labelled illustrative; values Calculated (rectangular-room approximation, axial only). Pause control; starts paused under prefers-reduced-motion.
+
+## Earlier — progressive existing-application update
 
 - Existing luxury editorial branding, logo, typography, navigation components and local study records retained; this is not a replacement app.
 - Exactly two gateways: **Project Management** and **RATEENA SOUND**. RATEENA SOUND contains exactly **RATEENA SOUND FLAGSHIP STUDIO** and **RATEENA SOUND CENTER**. Project Management retains its nine empty future modules.

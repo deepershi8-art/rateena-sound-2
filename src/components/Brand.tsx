@@ -30,7 +30,7 @@ export function Brand() {
   }, []);
   return (
     <Link
-      to="/"
+      to="/gateway"
       className={`wordmark ${official ? "official-brand" : ""}`}
       aria-label="RATEENA SOUND 2 home"
     >

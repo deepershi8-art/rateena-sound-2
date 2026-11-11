@@ -48,6 +48,90 @@ const descriptions: Record<string, string> = {
   Equipment:
     "Planned equipment and operating requirements are pending. Drawing objects are typical size references only, not an equipment schedule.",
 };
+/** Proposed control-room glazing (owner design brief). Typical widths; no acoustic rating specified. */
+export function controlWindows(rooms: SpatialRoom[]) {
+  const get = (id: string) => rooms.find((r) => r.id === id)!;
+  const c = get("control");
+  const lounge = get("lounge");
+  const half = WALL_ZONE / 2;
+  const span = (len: number, max: number) =>
+    Math.min(len, Math.max(0.6, max - 0.4));
+  const w = [
+    {
+      id: "live",
+      label: "to Main Live Room",
+      x: c.x + (c.w - span(2.4, c.w)) / 2,
+      y: c.y - half,
+      len: span(2.4, c.w),
+      vertical: false,
+    },
+    {
+      id: "lounge",
+      label: "to circulation / lounge",
+      x: c.x + 0.35,
+      y: c.y + c.d + half,
+      len: span(1.5, c.w / 2 - 0.4),
+      vertical: false,
+    },
+    {
+      id: "lounge-wall",
+      label: "lounge wall, aligned for sight line",
+      x: c.x + 0.35,
+      y: lounge.y - half,
+      len: span(1.5, c.w / 2 - 0.4),
+      vertical: false,
+    },
+    {
+      id: "percussion",
+      label: "to Percussion Isolation Booth",
+      x: c.x - half,
+      y: c.y + 1.2,
+      len: span(1.2, c.d - 1.2),
+      vertical: true,
+    },
+    {
+      id: "bass",
+      label: "to Bass / Rhythm Isolation Booth",
+      x: c.x + c.w + half,
+      y: c.y + 0.7,
+      len: span(1.0, get("bass").d - 0.7),
+      vertical: true,
+    },
+    {
+      id: "vocal",
+      label: "to Vocal Isolation Booth",
+      x: c.x + c.w + half,
+      y: get("vocal").y + 0.4,
+      len: span(1.0, get("vocal").d - 0.4),
+      vertical: true,
+    },
+  ];
+  return w;
+}
+function ControlGlazing({ rooms }: { rooms: SpatialRoom[] }) {
+  return (
+    <g className="glazing">
+      {controlWindows(rooms).map((w) => {
+        const t = WALL_ZONE;
+        const rect = w.vertical
+          ? { x: w.x - t / 2, y: w.y, width: t, height: w.len }
+          : { x: w.x, y: w.y - t / 2, width: w.len, height: t };
+        const lines = w.vertical
+          ? [-0.05, 0.05].map((o) => `M${w.x + o} ${w.y}V${w.y + w.len}`)
+          : [-0.05, 0.05].map((o) => `M${w.x} ${w.y + o}H${w.x + w.len}`);
+        return (
+          <g key={w.id} data-window={w.id}>
+            <title>{`Proposed double / laminated glazing ${w.label} — ${w.len.toFixed(2)} m typical width; acoustic rating not specified`}</title>
+            <rect className="glazing-cut" {...rect} />
+            {lines.map((d) => (
+              <path key={d} className="glazing-pane" d={d} />
+            ))}
+          </g>
+        );
+      })}
+    </g>
+  );
+}
 function ObjectDrawing({ o }: { o: TypicalObject }) {
   return (
     <g
@@ -224,7 +308,7 @@ export function ConceptPlanWorkspace() {
     c.setAttribute("height", `${exportHeight}mm`);
     c.setAttribute("viewBox", `${base.x} ${base.y} ${base.w} ${base.h}`);
     const css = document.createElementNS("http://www.w3.org/2000/svg", "style");
-    css.textContent = `svg{background:#080e16;font-family:Arial,sans-serif;color:#c9b684}.room-fill{fill:#0c1720;stroke:#68a7be;stroke-width:.025}.room-fill.active{fill:#18262c;stroke:#d2b477}.wall-zone{fill:none;stroke:#32404a}.room-name{fill:#d9e4e9;font-size:.34px;text-anchor:middle}.room-area{fill:#9fb9c8;font-size:.27px;text-anchor:middle}.plan-title{fill:#c9b684;font-size:.28px}.plan-note{fill:#9eb4c0;font-size:.22px}.dimension{fill:none;stroke:#527281;stroke-width:.015}.dimension text{fill:#83a0b1;stroke:none;font-size:.24px;text-anchor:middle}.metric-grid{fill:url(#metreGrid)}.typical-object{fill:none;stroke:#a88d61;stroke-width:.025}.object-bounds{stroke-dasharray:.08 .06;stroke-opacity:.45}.door-drawing{fill:none;stroke:#9cbcc8;stroke-width:.025}.door-cut{stroke:#080e16}.scale-bar text{fill:#c9dbe1;font-size:.25px;text-anchor:middle}.wc-line{stroke:#87a0ad;stroke-width:.03;fill:none}`;
+    css.textContent = `svg{background:#080e16;font-family:Arial,sans-serif;color:#c9b684}.room-fill{fill:#0c1720;stroke:#68a7be;stroke-width:.025}.room-fill.active{fill:#18262c;stroke:#d2b477}.wall-zone{fill:none;stroke:#32404a}.room-name{fill:#d9e4e9;font-size:.34px;text-anchor:middle}.room-area{fill:#9fb9c8;font-size:.27px;text-anchor:middle}.plan-title{fill:#c9b684;font-size:.28px}.plan-note{fill:#9eb4c0;font-size:.22px}.dimension{fill:none;stroke:#527281;stroke-width:.015}.dimension text{fill:#83a0b1;stroke:none;font-size:.24px;text-anchor:middle}.metric-grid{fill:url(#metreGrid)}.typical-object{fill:none;stroke:#a88d61;stroke-width:.025}.object-bounds{stroke-dasharray:.08 .06;stroke-opacity:.45}.door-drawing{fill:none;stroke:#9cbcc8;stroke-width:.025}.door-cut{stroke:#080e16}.scale-bar text{fill:#c9dbe1;font-size:.25px;text-anchor:middle}.wc-line{stroke:#87a0ad;stroke-width:.03;fill:none}.glazing-cut{fill:#080e16;stroke:#6ec8eb;stroke-width:.02}.glazing-pane{stroke:#6ec8eb;stroke-width:.025;fill:none}`;
     c.prepend(css);
     const u = URL.createObjectURL(
       new Blob([new XMLSerializer().serializeToString(c)], {
@@ -326,7 +410,11 @@ export function ConceptPlanWorkspace() {
                   checked={prefs[k]}
                   onChange={() => preference(k)}
                 />
-                {k === "grid" ? "Metre grid" : k}
+                {k === "grid"
+                  ? "Metre grid"
+                  : k === "doors"
+                    ? "Doors & windows"
+                    : k}
               </label>
             ))}
           </div>
@@ -581,6 +669,7 @@ export function ConceptPlanWorkspace() {
                   <BottomDoor x={0} y={0} />
                 </g>
               )}
+              {prefs.doors && <ControlGlazing rooms={spatial.rooms} />}
               <text
                 className="plan-note"
                 textAnchor="middle"
@@ -658,10 +747,13 @@ export function ConceptPlanWorkspace() {
             <summary>Typical-size objects & fit check</summary>
             <p className="small">
               Size references, not selected equipment or a capacity/compliance
-              claim. Wall zones = 0.30 m assumed; single leaf = 0.90 m; entrance
-              pair = 1.80 m; WC cubicle = 1.50 × 0.90 m. An access/service
-              allocation is added outside net rooms; routes, accessibility, fire
-              escape and door swings require review.
+              claim. Control-room glazing (live room, lounge, percussion and
+              bass/vocal booths) is proposed double / laminated glazing at
+              typical widths; no acoustic rating is specified. Wall zones = 0.30
+              m assumed; single leaf = 0.90 m; entrance pair = 1.80 m; WC
+              cubicle = 1.50 × 0.90 m. An access/service allocation is added
+              outside net rooms; routes, accessibility, fire escape and door
+              swings require review.
             </p>
             <ul>
               {[...new Set(objects.map((o) => o.label))].map((v) => (

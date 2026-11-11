@@ -6,34 +6,87 @@ import { Sketch } from "./Sketch";
 import { References } from "./Engineering";
 import { IsolationModel, IsolationAssemblyNotes } from "./IsolationModel";
 import { EditableNote } from "./StudyFields";
-const groups = [
+import { ImageSlot } from "./ImageSlot";
+import { ModeCube } from "./ModeCube";
+import { useProject } from "../lib/store";
+interface Group {
+  id: string;
+  folio: string;
+  title: string;
+  intro: string;
+  diagram: string;
+  topics: string[];
+  aliases?: string[];
+  study?: { section: string; label: string };
+  appendix?: boolean;
+}
+const groups: Group[] = [
   {
     id: "sound",
+    folio: "01",
     title: "Understanding Sound",
     intro:
-      "Sound is a mechanical pressure disturbance. In buildings, distinguish airborne noise from vibration transmitted through the structure: both paths matter.",
+      "Sound is a mechanical pressure disturbance travelling through air and structure. In buildings, distinguish airborne noise from vibration carried through the structure: both paths matter.",
     diagram: "wave",
     topics: ["sound"],
   },
   {
     id: "sound-isolation",
-    title: "Sound Isolation",
+    folio: "02",
+    title: "Stopping Sound — Isolation",
     intro:
-      "An integrated Room-in-Room / Box-in-Box design controls transmission. Mass–Decoupling–Damping and Floating Construction are complementary techniques within that design, not three competing grades.",
+      "Isolation keeps sound in and noise out. Mass, decoupling, damping and floating construction are complementary techniques within one integrated Room-in-Room / Box-in-Box design, not competing grades.",
     diagram: "isolation",
-    topics: ["isolation", "isolation-treatment", "static-comparison", "hvac"],
+    topics: ["isolation", "isolation-treatment", "static-comparison"],
   },
   {
     id: "internal-acoustics",
-    title: "Internal Acoustics",
+    folio: "03",
+    title: "Acoustic Treatment",
+    aliases: ["acoustic-treatment"],
     intro:
-      "Absorption, diffusion and reflection shape sound inside a room. Geometry, room modes, bass control and reverberation must be studied together; treatment is not sound isolation.",
+      "Treatment shapes how sound behaves inside the room — through absorption, diffusion and controlled reflection. It is not isolation: it does not stop sound leaving the room.",
     diagram: "reflections",
     topics: ["geometry", "modes", "volume", "reflections", "decay", "variable"],
   },
   {
+    id: "hvac",
+    folio: "04",
+    title: "HVAC & Conditioning",
+    intro:
+      "A studio must breathe quietly. Air must be supplied and extracted without duct noise, cross-talk between rooms or plant vibration. NC-15 remains a Proposed aspiration, not an achieved result.",
+    diagram: "isolation",
+    topics: ["hvac"],
+    study: { section: "hvac", label: "Open HVAC and Environmental Control" },
+  },
+  {
+    id: "infrastructure",
+    folio: "05",
+    title: "Equipment Infrastructure",
+    intro:
+      "Electrical distribution, earthing, audio wiring, patching, data networks and lighting must be coordinated with the isolation design, so that no service penetration bridges an isolated construction.",
+    diagram: "verification",
+    topics: [],
+    study: {
+      section: "audio",
+      label: "Open Electrical, Audio and Network Infrastructure",
+    },
+  },
+  {
+    id: "equipment",
+    folio: "06",
+    title: "Equipment",
+    intro:
+      "Equipment planning follows the rooms and their uses. No equipment package has been selected yet; the plan’s instruments and furniture are typical-size references only.",
+    diagram: "verification",
+    topics: [],
+    study: { section: "equipment", label: "Open Equipment Planning" },
+  },
+  {
     id: "terminology",
-    title: "Acoustic Terminology",
+    folio: "A",
+    appendix: true,
+    title: "Appendix A — Acoustic Terminology",
     intro:
       "These terms describe different acoustic phenomena. A single-number rating is not a full design brief, and a proposed target is not a measured result.",
     diagram: "decay",
@@ -41,13 +94,78 @@ const groups = [
   },
   {
     id: "standards",
-    title: "International Standards",
+    folio: "B",
+    appendix: true,
+    title: "Appendix B — International Standards",
     intro:
       "ISO, IEC, ITU-R and EBU references have different scopes. Select applicable documents and editions with the consultant; listing a reference does not establish compliance.",
     diagram: "verification",
     topics: ["verification"],
   },
 ];
+const isolationTopics = [
+  [
+    "mass",
+    "Mass",
+    "Heavier, denser constructions are harder for sound to set into vibration. Mass alone gives diminishing returns, especially at low frequencies.",
+  ],
+  [
+    "decoupling",
+    "Decoupling",
+    "Separating inner and outer constructions — independent framing, resilient supports and an air cavity — interrupts the structural path. A single rigid bridge can short-circuit it. Damping reduces resonant build-up within the leaves.",
+  ],
+  [
+    "floating",
+    "Floating construction",
+    "An inner floor, and where required its walls, supported on resilient elements selected for the loads and the frequencies of concern. The support type is an engineering decision; springs are not assumed.",
+  ],
+  [
+    "box-in-box",
+    "Box-in-box (room-in-room)",
+    "The integrated strategy: an inner room built within the structural shell, combining mass, decoupling, damping, airtightness and floating construction where each critical room needs it.",
+  ],
+];
+const treatmentTopics = [
+  [
+    "absorption",
+    "Absorption",
+    "Converts part of the incident sound energy into heat. Porous materials work mainly at mid and high frequencies; low frequencies need deep or resonant absorbers.",
+  ],
+  [
+    "diffusion",
+    "Diffusion",
+    "Scatters reflections in time and direction, keeping energy in the room while softening strong discrete echoes.",
+  ],
+  [
+    "reflection",
+    "Reflection",
+    "Hard surfaces return sound specularly — the angle of incidence equals the angle of reflection. Controlled reflections add life; parallel hard surfaces can cause flutter echoes and reinforce room modes.",
+  ],
+];
+function TopicCards({
+  prefix,
+  topics,
+}: {
+  prefix: string;
+  topics: string[][];
+}) {
+  return (
+    <div className="topic-cards">
+      {topics.map(([id, title, text], i) => (
+        <article className="topic-card" key={id} id={`topic-${id}`}>
+          <span className="principle-no">0{i + 1}</span>
+          <h3>{title}</h3>
+          <p>{text}</p>
+          <ImageSlot
+            slotKey={`knowledge:${prefix}:${id}`}
+            title={`${title} — illustration`}
+            placeholder={`${title} image – to be uploaded`}
+          />
+        </article>
+      ))}
+    </div>
+  );
+}
 const terms = [
   [
     "RT60",
@@ -145,12 +263,16 @@ export function Knowledge() {
   const { chapter = "sound" } = useParams();
   const navigate = useNavigate();
   const group =
-    groups.find((g) => g.id === chapter) ??
+    groups.find((g) => g.id === chapter || g.aliases?.includes(chapter)) ??
     groups.find((g) => g.topics.includes(chapter)) ??
     groups[0];
   const index = groups.indexOf(group);
+  const { data } = useProject();
+  const live = data.programme.find((r) => r.id === "live")!;
   const retained =
-    chapter !== group.id && chapters.find((c) => c.id === chapter);
+    chapter !== group.id &&
+    !group.aliases?.includes(chapter) &&
+    chapters.find((c) => c.id === chapter);
   const move = (id: string) => navigate(`/flagship/knowledge/${id}`);
   return (
     <div className="book-layout">
@@ -161,13 +283,13 @@ export function Knowledge() {
         </div>
         <p className="muted small">The science behind the space.</p>
         <nav aria-label="Knowledge chapters">
-          {groups.map((g, i) => (
+          {groups.map((g) => (
             <button
               key={g.id}
-              className={`chapter-link ${g.id === group.id ? "selected" : ""}`}
+              className={`chapter-link ${g.id === group.id ? "selected" : ""} ${g.appendix ? "appendix-link" : ""}`}
               onClick={() => move(g.id)}
             >
-              <span>{String(i + 1).padStart(2, "0")}</span>
+              <span>{g.folio}</span>
               <b>{g.title}</b>
               {g.id === group.id && <span className="chapter-dot" />}
             </button>
@@ -181,12 +303,14 @@ export function Knowledge() {
       </aside>
       <article className="book-page">
         <div className="section-kicker">
-          <span>KNOWLEDGE / CHAPTER {String(index + 1).padStart(2, "0")}</span>
+          <span>
+            KNOWLEDGE / {group.appendix ? "APPENDIX" : "CHAPTER"} {group.folio}
+          </span>
           <span>FLAGSHIP STUDIO · PHASE ONE</span>
         </div>
         <div className="chapter-heading">
           <span className="folio-number" aria-hidden="true">
-            {String(index + 1).padStart(2, "0")}
+            {group.folio}
           </span>
           <div>
             <h1>{retained ? retained.title : group.title}</h1>
@@ -198,12 +322,39 @@ export function Knowledge() {
         ) : (
           <>
             {group.id === "sound" ? (
-              <RetainedTopic id="sound" />
+              <>
+                <RetainedTopic id="sound" />
+                <ImageSlot
+                  slotKey="knowledge:sound"
+                  title="Sound — illustration"
+                  placeholder="Sound image – to be uploaded"
+                />
+              </>
             ) : group.id === "sound-isolation" ? (
               <>
+                <TopicCards prefix="isolation" topics={isolationTopics} />
                 <IsolationModel />
                 <IsolationAssemblyNotes />
               </>
+            ) : group.id === "internal-acoustics" ? (
+              <>
+                <TopicCards prefix="treatment" topics={treatmentTopics} />
+                <ModeCube
+                  initial={{
+                    L: live.length,
+                    W: live.width,
+                    H: live.height ?? 4.5,
+                  }}
+                />
+              </>
+            ) : group.id === "hvac" ? (
+              <RetainedTopic id="hvac" />
+            ) : group.id === "infrastructure" || group.id === "equipment" ? (
+              <ImageSlot
+                slotKey={`knowledge:${group.id}`}
+                title={`${group.title} — illustration`}
+                placeholder={`${group.title} image – to be uploaded`}
+              />
             ) : (
               <div className="drawing-surface">
                 <div className="drawing-topline">
@@ -231,8 +382,18 @@ export function Knowledge() {
               </p>
             )}
             {group.id === "standards" && <References />}
+            {group.study && (
+              <button
+                className="text-button study-jump"
+                onClick={() =>
+                  navigate(`/flagship/study/${group.study!.section}`)
+                }
+              >
+                {group.study.label} <MoveUpRight size={14} />
+              </button>
+            )}
             {group.topics
-              .filter((t) => t !== "sound")
+              .filter((t) => t !== "sound" && t !== "hvac")
               .map((id) => (
                 <details className="tool-block retained-study" key={id}>
                   <summary>
@@ -263,7 +424,9 @@ export function Knowledge() {
             <ArrowLeft size={15} />
             Previous chapter
           </button>
-          <span>{String(index + 1).padStart(2, "0")} / 05</span>
+          <span>
+            {group.folio} / {groups.length}
+          </span>
           <button
             disabled={index === groups.length - 1}
             onClick={() => move(groups[index + 1].id)}

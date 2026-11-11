@@ -33,7 +33,7 @@ const make = (
   width,
   height,
   dimensionBasis: basis,
-  capacity: "To be validated against the equipment layout and circulation.",
+  capacity: GENERIC_CAPACITY,
   evidence: {
     ...conceptEvidence,
     ...(basis === "area-derived"
@@ -47,17 +47,24 @@ const make = (
       : {}),
   },
 });
+export const GENERIC_CAPACITY =
+  "To be validated against the equipment layout and circulation.";
+export const LIVE_PROGRAMME_CAPACITY =
+  "Design target: up to 25 musicians (owner, 11 Nov 2026; supersedes the earlier 12–15 reference). Layout, circulation, ventilation and egress to be validated.";
 export const preliminaryProgramme: ProgrammeRoom[] = [
-  make(
-    "live",
-    "Main Live Room",
-    "Main Live Room",
-    "Ensemble recording",
-    100,
-    12,
-    8.33,
-    4.5,
-  ),
+  {
+    ...make(
+      "live",
+      "Main Live Room",
+      "Main Live Room",
+      "Ensemble recording",
+      100,
+      12,
+      8.33,
+      4.5,
+    ),
+    capacity: LIVE_PROGRAMME_CAPACITY,
+  },
   make(
     "control",
     "Control Room",

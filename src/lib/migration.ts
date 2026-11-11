@@ -1,6 +1,11 @@
 import type { AppData, LegacyData } from "./types";
 import { validateLegacy } from "./legacyValidation";
-import { preliminaryProgramme, additionalReferences } from "../data/programme";
+import {
+  preliminaryProgramme,
+  additionalReferences,
+  GENERIC_CAPACITY,
+  LIVE_PROGRAMME_CAPACITY,
+} from "../data/programme";
 export const LEGACY_KEY = "rateena-sound-2:v1";
 export const STORAGE_KEY = "rateena-sound-2:v2";
 export function upgradeLegacy(old: LegacyData, record = false): AppData {
@@ -136,9 +141,24 @@ export function validateData(
     )
       throw new Error("Invalid study note.");
 }
+/** Owner, 11 Nov 2026: the live room targets up to 25 musicians. Only the
+ * untouched earlier default is replaced; an owner-edited value is kept. */
+const SUPERSEDED_CAPACITY = "12–15 musicians";
+export const LIVE_ROOM_CAPACITY = "Up to 25 musicians (design target)";
+function applyCapacityUpdate(data: AppData) {
+  for (const r of data.rooms)
+    if (r.id === "live" && r.capacity === SUPERSEDED_CAPACITY)
+      r.capacity = LIVE_ROOM_CAPACITY;
+  for (const r of data.programme)
+    if (r.id === "live" && r.capacity === GENERIC_CAPACITY)
+      r.capacity = LIVE_PROGRAMME_CAPACITY;
+  return data;
+}
 export function normaliseData(value: unknown) {
   validateData(value);
-  return value.schemaVersion === 1
-    ? upgradeLegacy(value, true)
-    : structuredClone(value);
+  return applyCapacityUpdate(
+    value.schemaVersion === 1
+      ? upgradeLegacy(value, true)
+      : structuredClone(value),
+  );
 }
