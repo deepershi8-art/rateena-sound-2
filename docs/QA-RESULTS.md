@@ -39,8 +39,10 @@ The drafting canvas remains clean and empty. Chapter 02.1 remains static. Hierar
 
 - Live application: https://deepershi8-art.github.io/rateena-sound-2/
 - Repository: https://github.com/deepershi8-art/rateena-sound-2
-- Standard build JS asset: `assets/index-De1porFL.js` (new versus the preceding `index-BupqpVhw.js`).
+- Standard build JS asset: `assets/index-DXfg9KNY.js` (new versus the preceding `index-BupqpVhw.js`).
 - Offline edition: `/workspace/artifacts/RATEENA-SOUND-2.html`
 - Clean source archive: `/workspace/artifacts/rateena-sound-2-source.zip`
 
 Publishing uses the existing Pages workflow. No files or settings in the earlier Cairo application's repository were changed.
+
+The final Pages HTML, JavaScript and stylesheet return HTTP 200, with asset names matching the production build used for visual review. The standalone file was also opened in bundled Chromium: both home sections and all logos rendered, no horizontal overflow or page errors occurred, and zero HTTP(S) requests were made. Its inspected preview is `/workspace/artifacts/RATEENA-SOUND-2-offline-preview.png`.
