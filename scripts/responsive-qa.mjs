@@ -12,6 +12,10 @@ try {
       "/flagship/knowledge/sound",
       "/flagship/study/architectural",
       "/flagship/study/geometry",
+      "/flagship/knowledge/sound-isolation",
+      "/flagship/knowledge/terminology",
+      "/flagship/knowledge/standards",
+      "/centre",
     ]) {
       const c = await b.newContext({
         viewport: { width, height: 900 },

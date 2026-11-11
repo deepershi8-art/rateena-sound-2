@@ -9,7 +9,7 @@
     "preview": "vite preview --host 0.0.0.0",
     "test": "vitest run",
     "build:offline": "tsc -b && vite build --mode offline",
-    "test:visual": "node scripts/visual-qa.mjs",
+    "test:visual": "node scripts/progressive-qa.mjs",
     "test:responsive": "node scripts/responsive-qa.mjs"
   },
   "dependencies": {

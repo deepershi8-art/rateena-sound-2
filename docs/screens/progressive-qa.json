@@ -1,0 +1,112 @@
+[
+  {
+    "name": "home",
+    "width": 1440,
+    "scrollWidth": 1440,
+    "images": [
+      {
+        "alt": "Official RATEENA SOUND logo",
+        "loaded": true
+      },
+      {
+        "alt": "Official RATEENA SOUND logo",
+        "loaded": true
+      }
+    ],
+    "errors": []
+  },
+  {
+    "name": "knowledge-01",
+    "width": 1440,
+    "scrollWidth": 1440,
+    "images": [
+      {
+        "alt": "Official RATEENA SOUND logo",
+        "loaded": true
+      }
+    ],
+    "errors": []
+  },
+  {
+    "name": "knowledge-02-1",
+    "width": 1440,
+    "scrollWidth": 1440,
+    "images": [
+      {
+        "alt": "Official RATEENA SOUND logo",
+        "loaded": true
+      }
+    ],
+    "errors": []
+  },
+  {
+    "name": "architectural-proposal",
+    "width": 1440,
+    "scrollWidth": 1440,
+    "images": [
+      {
+        "alt": "Official RATEENA SOUND logo",
+        "loaded": true
+      },
+      {
+        "alt": "Latest architectural concept — preliminary reference with unresolved dimensional conflicts",
+        "loaded": true
+      }
+    ],
+    "errors": []
+  },
+  {
+    "geometry": {
+      "barPixels": 124.05340576171875,
+      "liveWidthPixels": 297.72808837890625,
+      "boothWidthPixels": 74.4320068359375,
+      "pianoDepthPixels": 67.98124694824219,
+      "consoleWidthPixels": 54.58349609375,
+      "engineerChairPixels": 16.12689208984375,
+      "liveToBoothArea": 13.32800631409494,
+      "xMetrePixels": 24.81067476947081,
+      "yMetrePixels": 24.81067476947081,
+      "wallZonePixels": 7.443202430841243
+    }
+  },
+  {
+    "name": "center",
+    "width": 1440,
+    "scrollWidth": 1440,
+    "images": [
+      {
+        "alt": "Official RATEENA SOUND logo",
+        "loaded": true
+      }
+    ],
+    "errors": []
+  },
+  {
+    "name": "mobile",
+    "width": 390,
+    "scrollWidth": 390,
+    "images": [
+      {
+        "alt": "Official RATEENA SOUND logo",
+        "loaded": true
+      }
+    ],
+    "errors": []
+  },
+  {
+    "name": "mobile-plan",
+    "width": 390,
+    "scrollWidth": 390,
+    "images": [
+      {
+        "alt": "Official RATEENA SOUND logo",
+        "loaded": true
+      },
+      {
+        "alt": "Latest architectural concept — preliminary reference with unresolved dimensional conflicts",
+        "loaded": true
+      }
+    ],
+    "errors": []
+  }
+]

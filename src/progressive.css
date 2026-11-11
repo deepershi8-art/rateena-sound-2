@@ -1,0 +1,1096 @@
+/* Progressive study additions. Reuses the existing RATEENA editorial identity. */
+.project-prefix {
+  display: block;
+  font-family: Inter, sans-serif;
+  font-size: 10px;
+  letter-spacing: 0.22em;
+  font-weight: 500;
+  margin-bottom: 12px;
+  line-height: 1.6;
+}
+.facility-card h3 {
+  font-size: clamp(27px, 3vw, 47px);
+}
+.facility-title h2 {
+  font-size: clamp(17px, 2vw, 28px);
+  max-width: 650px;
+}
+.eyebrow {
+  font-size: 8px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: #a49b83;
+  display: block;
+  line-height: 1.8;
+}
+.updated-study-layout {
+  grid-template-columns: 225px minmax(0, 1fr);
+}
+.updated-study-layout .study-content {
+  min-width: 0;
+}
+.updated-study-layout .study-index nav > a,
+.study-plan-link {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  width: 100%;
+  padding: 13px 8px;
+  border: 0;
+  border-left: 1px solid transparent;
+  background: none;
+  color: #96a5b1;
+  text-align: left;
+  font-size: 10px;
+  line-height: 1.65;
+  text-decoration: none;
+}
+.updated-study-layout .study-index nav > a > span,
+.study-plan-link > span {
+  font-family: "Cormorant Garamond", serif;
+  font-size: 25px;
+  color: #a49575;
+  min-width: 27px;
+}
+.updated-study-layout .study-index .selected {
+  border-color: #b8955a90;
+  background: #b8955a06;
+  color: #ddc897;
+}
+.retained-index {
+  margin-top: 28px !important;
+}
+.retained-index button {
+  display: block;
+  width: 100%;
+  text-align: left;
+  background: none;
+  border: 0;
+  font-size: 10px;
+  line-height: 1.7;
+  padding: 9px 0;
+  color: #92a0ad;
+}
+.concept-plan-workspace {
+  padding: 26px 28px;
+}
+.plan-introduction {
+  display: flex;
+  justify-content: space-between;
+  align-items: start;
+  gap: 15px;
+}
+.plan-introduction h2 {
+  font-family: "Cormorant Garamond", serif;
+  font-size: 56px;
+  line-height: 1;
+  margin: 12px 0 16px;
+  letter-spacing: -0.035em;
+}
+.plan-introduction p {
+  font-size: 12px;
+  line-height: 1.8;
+  color: #9cabb7;
+  margin-bottom: 18px;
+}
+.concept-plan-workspace > .notice {
+  font-size: 10px;
+  line-height: 1.9;
+  padding: 12px 15px;
+  margin-bottom: 22px;
+}
+.plan-topline {
+  display: flex;
+  justify-content: space-between;
+  gap: 14px;
+  font-size: 8px;
+  letter-spacing: 0.04em;
+  color: #91a7b6;
+  padding-bottom: 12px;
+  line-height: 1.7;
+}
+.plan-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 310px;
+  gap: 22px;
+  align-items: start;
+}
+.drawing-column {
+  min-width: 0;
+}
+.plan-toolbar {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 8px;
+  background: #0d1621;
+  border: 1px solid #617f963b;
+}
+.plan-toolbar > div {
+  display: flex;
+  align-items: center;
+  gap: 3px;
+}
+.plan-toolbar button {
+  display: grid;
+  place-items: center;
+  width: 29px;
+  height: 28px;
+  background: transparent;
+  border: 1px solid transparent;
+  color: #91aebf;
+}
+.plan-toolbar button:hover,
+.plan-toolbar .selected {
+  border-color: #b8955a60;
+  color: #dbc38e;
+}
+.plan-toolbar select {
+  background: #0b141f;
+  border: 1px solid #617f9640;
+  color: #a6b9c6;
+  font-size: 10px;
+  padding: 5px;
+}
+.plan-layers {
+  display: flex;
+  gap: 9px;
+  flex-wrap: wrap;
+  padding: 10px 9px;
+  color: #8aa4b7;
+  border-inline: 1px solid #617f963b;
+  background: #0a121b;
+}
+.plan-layers label {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 8px;
+  text-transform: capitalize;
+}
+.plan-layers input {
+  accent-color: #b8955a;
+  width: 10px;
+  height: 10px;
+  margin: 0;
+}
+.metre-plan {
+  height: 690px;
+  background: #080e16;
+  border: 1px solid #617f9640;
+  overflow: hidden;
+}
+.metre-plan:fullscreen {
+  height: 100vh;
+  width: 100vw;
+}
+.metre-plan > svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+  touch-action: none;
+}
+.metre-plan.pan-mode {
+  cursor: grab;
+}
+.metre-plan.pan-mode:active {
+  cursor: grabbing;
+}
+.selectable-room {
+  cursor: pointer;
+  outline: none;
+}
+.wall-zone {
+  fill: none;
+  stroke: #2d3d46;
+}
+.room-fill {
+  fill: #0c1720;
+  stroke: #68a7be;
+  stroke-width: 0.025;
+  transition: fill 0.2s;
+}
+.room-fill.active {
+  fill: #17252b;
+  stroke: #d2b477;
+  stroke-width: 0.04;
+}
+.selectable-room:focus .room-fill {
+  stroke: #fff;
+  stroke-width: 0.07;
+}
+.selectable-room:hover .room-fill {
+  fill: #172733;
+}
+.draft-label {
+  pointer-events: none;
+}
+.room-name {
+  fill: #d9e4e9;
+  font-family: Inter, sans-serif;
+  font-size: 0.32px;
+  text-anchor: middle;
+  letter-spacing: 0.005px;
+}
+.room-area {
+  fill: #9fb9c8;
+  font-family: Inter, sans-serif;
+  font-size: 0.25px;
+  text-anchor: middle;
+}
+.plan-title {
+  fill: #c9b684;
+  font-family: Inter, sans-serif;
+  font-size: 0.27px;
+  letter-spacing: 0.035px;
+}
+.plan-note {
+  fill: #9eb4c0;
+  font-family: Inter, sans-serif;
+  font-size: 0.21px;
+  letter-spacing: 0.014px;
+}
+.metric-grid {
+  fill: url(#metreGrid);
+  pointer-events: none;
+}
+.dimension {
+  fill: none;
+  stroke: #527281;
+  stroke-width: 0.015;
+  pointer-events: none;
+}
+.dimension text {
+  fill: #91acbc;
+  stroke: none;
+  font-size: 0.23px;
+  text-anchor: middle;
+  font-family: Inter, sans-serif;
+}
+.typical-object {
+  fill: none;
+  stroke: #b49a6c;
+  stroke-width: 0.025;
+  pointer-events: none;
+}
+.object-bounds {
+  stroke-dasharray: 0.08 0.06;
+  stroke-opacity: 0.5;
+}
+.riser {
+  stroke: #9b855f;
+  stroke-dasharray: 0.1 0.06;
+}
+.chair,
+.person {
+  stroke: #80a3b5;
+}
+.door-drawing {
+  fill: none;
+  stroke: #9cbcc8;
+  stroke-width: 0.025;
+  pointer-events: none;
+}
+.door-cut {
+  stroke: #080e16;
+}
+.scale-bar text {
+  fill: #c9dbe1;
+  font-size: 0.25px;
+  text-anchor: middle;
+  font-family: Inter, sans-serif;
+}
+.wc-line {
+  stroke: #87a0ad;
+  stroke-width: 0.03;
+  fill: none;
+  pointer-events: none;
+}
+.scale-caption {
+  display: flex;
+  flex-direction: column;
+  font-size: 9px;
+  line-height: 1.8;
+  color: #8da5b6;
+  padding: 14px;
+  border: 1px solid #617f963b;
+  border-top: 0;
+  gap: 5px;
+}
+.scale-caption b {
+  color: #becdd7;
+  font-weight: 500;
+}
+.room-selector {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 6px;
+  margin: 17px 0;
+}
+.room-selector button {
+  display: flex;
+  justify-content: space-between;
+  gap: 8px;
+  text-align: left;
+  align-items: center;
+  background: none;
+  border: 1px solid #71899c35;
+  padding: 11px 9px;
+  font-size: 9px;
+  color: #9eafb9;
+}
+.room-selector button.selected {
+  border-color: #b8955a77;
+  background: #b8955a07;
+  color: #d8c28f;
+}
+.room-selector small {
+  white-space: nowrap;
+  color: #8b9eaa;
+}
+.room-information {
+  min-width: 0;
+  border: 1px solid #9dafc033;
+  background: #0a1018;
+  position: sticky;
+  top: 15px;
+  max-height: calc(100vh - 30px);
+  overflow: auto;
+  scrollbar-width: thin;
+  scrollbar-color: #31414d transparent;
+}
+.room-information .room-panel-heading {
+  padding: 20px 18px;
+  border-bottom: 1px solid #9dafc025;
+}
+.room-information .room-panel-heading h3 {
+  font-size: 28px;
+  margin: 12px 0;
+  line-height: 1.08;
+}
+.room-tabs {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  border-bottom: 1px solid #9dafc025;
+  padding: 8px;
+  gap: 3px;
+}
+.room-tabs button {
+  background: none;
+  color: #8da2b4;
+  border: 1px solid transparent;
+  text-align: left;
+  font-size: 9px;
+  padding: 8px 7px;
+  line-height: 1.7;
+}
+.room-tabs button[aria-selected="true"] {
+  color: #d0ba85;
+  border-color: #b8955a55;
+  background: #b8955a06;
+}
+.room-tab-content {
+  padding: 17px;
+  font-size: 11px;
+  line-height: 1.9;
+}
+.room-tab-content > p {
+  color: #a1b3bf;
+}
+.room-tab-content h4 {
+  font-family: "Cormorant Garamond", serif;
+  font-size: 28px;
+  color: #d9e3e9;
+  margin: 0 0 15px;
+}
+.image-placeholder {
+  border: 1px dashed #7895a836;
+  padding: 25px 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 9px;
+  color: #a1b5c1;
+  text-align: center;
+  margin-bottom: 18px;
+  font-size: 10px;
+}
+.image-placeholder small {
+  font-size: 9px;
+  color: #7d929f;
+}
+.dimension-source {
+  font-size: 9px;
+  line-height: 1.8;
+  color: #bdab86;
+}
+.room-information .room-form h3,
+.resource-manager h3 {
+  font-family: "Cormorant Garamond", serif;
+  font-size: 23px;
+  line-height: 1.15;
+}
+.room-information .room-form {
+  padding: 0;
+  border: 0;
+  margin-top: 20px;
+}
+.room-information .dimension-fields {
+  gap: 6px;
+}
+.room-information .dimension-fields input {
+  width: 100%;
+  padding: 9px 6px;
+  font-size: 11px;
+}
+.room-information .dimension-fields label {
+  font-size: 8px;
+  line-height: 1.6;
+}
+.compact-field {
+  display: block;
+  margin: 12px 0;
+  color: #96aab9;
+  font-size: 9px;
+}
+.compact-field input,
+.compact-field textarea {
+  display: block;
+  width: 100%;
+  margin-top: 5px;
+  background: #070e17;
+  border: 1px solid #91a9bd33;
+  color: #cfdae1;
+  padding: 9px;
+  font: inherit;
+}
+.compact-field textarea {
+  resize: vertical;
+  min-height: 65px;
+  line-height: 1.7;
+}
+.room-information .button {
+  font-size: 9px;
+  line-height: 1.7;
+  padding: 10px;
+}
+.current-stats {
+  grid-template-columns: 1fr;
+  margin: 20px 0;
+}
+.current-stats > div {
+  padding: 11px !important;
+  border-bottom: 1px solid #9dafc02b;
+}
+.current-stats strong {
+  font-size: 26px !important;
+  line-height: 1.4;
+}
+.current-stats small {
+  font-size: 8px !important;
+  letter-spacing: 0.1em;
+}
+.current-stats .badge {
+  font-size: 7px;
+}
+.concept-reference {
+  border: 1px solid #7895a82d;
+  margin: 22px 0;
+}
+.concept-reference img {
+  display: block;
+  width: 100%;
+  height: auto;
+  background: #111c27;
+}
+.concept-reference figcaption {
+  padding: 15px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  font-size: 10px;
+  line-height: 1.8;
+  color: #adbecc;
+}
+.concept-reference figcaption span {
+  color: #8197a9;
+  font-size: 9px;
+}
+.concept-reference.compact {
+  margin: 0 0 20px;
+}
+.concept-reference.compact figcaption {
+  padding: 11px;
+  font-size: 10px;
+}
+.concept-conflicts ol {
+  padding-left: 19px;
+}
+.concept-conflicts li {
+  font-size: 10px;
+  line-height: 1.9;
+  color: #91a8ba;
+  padding-bottom: 13px;
+}
+.resource-manager {
+  margin: 25px 0;
+  padding-top: 15px;
+  border-top: 1px solid #7895a82d;
+}
+.resource-controls,
+.note-actions {
+  display: flex;
+  gap: 9px;
+  align-items: center;
+  flex-wrap: wrap;
+}
+.resource-controls select,
+.note-actions select {
+  background: #0c1520;
+  border: 1px solid #8fa5b733;
+  color: #9eafbf;
+  font-size: 10px;
+  padding: 9px;
+}
+.upload-label {
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  font-size: 10px;
+  padding: 9px;
+  border: 1px solid #b8955a55;
+  color: #c9b384;
+  cursor: pointer;
+}
+.upload-label input {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  width: 100%;
+  cursor: pointer;
+}
+.resource-item {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  flex-wrap: wrap;
+  border-top: 1px solid #7895a82d;
+  padding: 15px 0;
+  font-size: 10px;
+  overflow-wrap: anywhere;
+}
+.resource-item > img {
+  width: 80px;
+  max-height: 90px;
+  object-fit: contain;
+}
+.resource-item > div {
+  flex: 1;
+}
+.resource-item small {
+  display: block;
+  font-size: 8px;
+  color: #87a0b3;
+  margin: 5px 0;
+}
+.editable-note {
+  margin: 20px 0;
+}
+.editable-note > label {
+  display: block;
+  font-size: 10px;
+  line-height: 1.9;
+  color: #acbcc9;
+}
+.editable-note textarea {
+  margin: 8px 0 10px;
+  display: block;
+  width: 100%;
+  min-height: 120px;
+  resize: vertical;
+  background: #080f18;
+  color: #c0cdda;
+  border: 1px solid #7895a83a;
+  padding: 12px;
+  font: inherit;
+  line-height: 1.8;
+}
+.note-actions button {
+  font-size: 10px;
+  padding: 9px 12px;
+  background: none;
+  border: 1px solid #b8955a55;
+  color: #ccb98e;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.note-actions button:disabled {
+  opacity: 0.45;
+}
+.empty-inline {
+  font-size: 10px;
+  line-height: 1.9;
+  padding: 16px 12px;
+  border: 1px dashed #71899c35;
+  color: #87a0b3;
+  margin: 15px 0;
+}
+.progressive-study {
+  padding: 35px 28px;
+}
+.progressive-study > h2 {
+  font-size: 44px;
+  margin: 12px 0 30px;
+}
+.updated-study-layout > .study-content > .tool-block {
+  margin: 0 28px 25px;
+}
+.study-section {
+  scroll-margin-top: 20px;
+}
+.study-section summary {
+  display: flex;
+  gap: 15px;
+  align-items: center;
+}
+.study-section-number {
+  font-family: "Cormorant Garamond", serif;
+  font-size: 30px;
+  color: #b29a6c;
+}
+.study-section .intro-text {
+  font-size: 12px;
+  line-height: 1.9;
+}
+.study-section summary .badge {
+  margin-left: auto;
+}
+.assembly-notes p {
+  font-size: 11px;
+  line-height: 1.9;
+  color: #9aafc0;
+}
+.assembly-notes .notice {
+  font-size: 10px;
+}
+.isolation-model {
+  border: 1px solid #7895a83a;
+  padding: 20px;
+  margin: 25px 0;
+}
+.model-controls {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 8px;
+}
+.model-controls button {
+  background: none;
+  border: 1px solid #7895a83a;
+  color: #90a7b9;
+  font-size: 10px;
+  line-height: 1.7;
+  text-align: left;
+  padding: 12px;
+}
+.model-controls button span {
+  display: block;
+  font-family: "Cormorant Garamond", serif;
+  color: #b89e6c;
+  font-size: 26px;
+  margin-bottom: 5px;
+}
+.model-controls button.selected {
+  border-color: #b8955a85;
+  color: #d7c28f;
+}
+.isolation-model > svg {
+  width: 100%;
+  max-height: 410px;
+  margin: 20px 0;
+}
+.isolation-model svg text {
+  fill: #c5b78f;
+  font-family: Inter, sans-serif;
+  font-size: 8px;
+  letter-spacing: 0.5px;
+}
+.model-explanation {
+  font-size: 12px;
+  line-height: 1.9;
+  color: #a6bac9;
+}
+.retained-topic.lesson {
+  display: block;
+}
+.retained-topic > .chapter-subtitle {
+  margin: 18px 0 24px !important;
+}
+.retained-topic .drawing-surface {
+  margin: 20px 0;
+}
+.retained-topic .principles {
+  padding-top: 10px;
+}
+.retained-study .principles {
+  padding: 10px;
+}
+.terminology-list {
+  margin-top: 25px;
+}
+.terminology-list p {
+  font-size: 12px;
+  line-height: 1.9;
+  color: #9aafc0;
+}
+.study-content .study-layout {
+  display: block;
+}
+.study-content .study-layout > .study-index {
+  display: none;
+}
+.room-information .tool-block {
+  padding: 14px 10px;
+}
+.room-information .tool-block summary {
+  font-size: 11px;
+  line-height: 1.8;
+}
+.room-information .tool-block ul {
+  padding-left: 16px;
+}
+.room-information .tool-block li {
+  font-size: 10px;
+  line-height: 1.9;
+}
+.room-information .evidence {
+  font-size: 9px;
+}
+.room-information .evidence dl > div {
+  grid-template-columns: 1fr;
+  gap: 4px;
+}
+.room-information .evidence dd {
+  font-size: 9px;
+  overflow-wrap: anywhere;
+}
+.room-information .evidence summary {
+  font-size: 9px;
+}
+.placeholder-page .editable-note {
+  max-width: 750px;
+}
+@media (min-width: 1600px) {
+  .plan-layout {
+    grid-template-columns: minmax(0, 1fr) 350px;
+  }
+  .metre-plan {
+    height: 800px;
+  }
+}
+@media (max-width: 1200px) {
+  .updated-study-layout {
+    grid-template-columns: 180px minmax(0, 1fr);
+  }
+  .plan-layout {
+    grid-template-columns: minmax(0, 1fr) 265px;
+    gap: 15px;
+  }
+  .concept-plan-workspace {
+    padding: 22px 18px;
+  }
+  .updated-study-layout .study-index nav > a,
+  .study-plan-link {
+    font-size: 9px;
+    padding: 11px 4px;
+    gap: 8px;
+  }
+  .room-information .room-panel-heading {
+    padding: 17px 13px;
+  }
+  .room-tab-content {
+    padding: 13px;
+  }
+  .metre-plan {
+    height: 640px;
+  }
+  .plan-layers {
+    gap: 7px;
+  }
+  .plan-layers label {
+    font-size: 7px;
+  }
+  .room-name {
+    font-size: 0.32px;
+  }
+  .plan-note {
+    font-size: 0.2px;
+  }
+}
+@media (max-width: 1000px) {
+  .updated-study-layout {
+    grid-template-columns: 1fr;
+  }
+  .updated-study-layout > .study-index {
+    position: static;
+    border-right: 0;
+    border-bottom: 1px solid #7895a83a;
+    padding: 15px 20px;
+  }
+  .updated-study-layout .study-index nav {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 3px;
+  }
+  .updated-study-layout .rail-foot,
+  .updated-study-layout > .study-index > .muted {
+    display: none;
+  }
+  .retained-index {
+    margin-top: 8px !important;
+  }
+  .updated-study-layout .study-index .rail-heading {
+    margin-bottom: 8px;
+  }
+  .plan-layout {
+    grid-template-columns: minmax(0, 1fr) 290px;
+  }
+  .plan-topline {
+    font-size: 8px;
+  }
+  .metre-plan {
+    height: 690px;
+  }
+  .room-selector {
+    grid-template-columns: 1fr;
+  }
+  .room-information .room-form h3 {
+    font-size: 24px;
+  }
+  .progressive-study {
+    padding: 30px 20px;
+  }
+}
+@media (max-width: 700px) {
+  .facility-title h2 {
+    font-size: 19px;
+    line-height: 1.2;
+  }
+  .project-prefix {
+    font-size: 9px;
+  }
+  .facility-card h3 {
+    font-size: 34px;
+  }
+  .updated-study-layout .study-index nav {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  .updated-study-layout .study-index nav > a,
+  .study-plan-link {
+    font-size: 8px;
+    gap: 9px;
+  }
+  .updated-study-layout .study-index nav > a > span,
+  .study-plan-link > span {
+    font-size: 21px;
+    min-width: 23px;
+  }
+  .plan-layout {
+    grid-template-columns: 1fr;
+  }
+  .concept-plan-workspace {
+    padding: 25px 16px;
+  }
+  .plan-introduction h2 {
+    font-size: 46px;
+  }
+  .plan-introduction p {
+    font-size: 11px;
+  }
+  .plan-topline {
+    display: block;
+    font-size: 8px;
+  }
+  .plan-topline > span {
+    display: block;
+    margin-bottom: 6px;
+  }
+  .metre-plan {
+    height: 565px;
+  }
+  .plan-layers {
+    gap: 9px;
+  }
+  .plan-layers label {
+    font-size: 8px;
+  }
+  .room-selector {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  .room-selector button {
+    font-size: 9px;
+  }
+  .room-information {
+    position: static;
+    max-height: none;
+  }
+  .room-tabs {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  .room-tabs button {
+    font-size: 10px;
+  }
+  .room-tab-content {
+    padding: 19px;
+  }
+  .room-information .dimension-fields {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+  .room-information .room-form h3 {
+    font-size: 27px;
+  }
+  .current-stats {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+  .current-stats strong {
+    font-size: 21px !important;
+  }
+  .current-stats > div {
+    padding: 8px !important;
+    min-width: 0;
+  }
+  .current-stats small {
+    font-size: 6px !important;
+  }
+  .current-stats .badge {
+    font-size: 6px;
+  }
+  .room-information .dimension-fields input {
+    font-size: 12px;
+  }
+  .room-information .tool-block summary {
+    font-size: 12px;
+  }
+  .scale-caption {
+    font-size: 9px;
+  }
+  .concept-reference figcaption {
+    font-size: 11px;
+  }
+  .concept-conflicts li {
+    font-size: 11px;
+  }
+  .concept-conflicts .evidence dl > div {
+    grid-template-columns: 1fr;
+  }
+  .concept-conflicts .evidence dd {
+    overflow-wrap: anywhere;
+  }
+  .model-controls {
+    gap: 5px;
+  }
+  .model-controls button {
+    padding: 9px;
+    font-size: 9px;
+  }
+  .model-controls button span {
+    font-size: 23px;
+  }
+  .isolation-model {
+    padding: 12px;
+  }
+  .isolation-model > svg {
+    margin: 10px 0;
+  }
+  .model-explanation {
+    font-size: 11px;
+  }
+  .progressive-study > h2 {
+    font-size: 35px;
+  }
+  .study-section summary {
+    font-size: 11px;
+    gap: 9px;
+  }
+  .study-section summary .badge {
+    font-size: 6px;
+  }
+  .study-section-number {
+    font-size: 25px;
+  }
+  .updated-study-layout > .study-content > .tool-block {
+    margin: 0 16px 20px;
+  }
+  .progressive-study {
+    padding: 30px 16px;
+  }
+  .study-section .intro-text {
+    font-size: 11px;
+  }
+  .resource-item {
+    align-items: start;
+  }
+  .resource-item > img {
+    width: 65px;
+  }
+  .study-content .study-layout > .study-content .content-panel {
+    padding: 20px 16px;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .room-fill {
+    transition: none;
+  }
+}
+.retained-topic.lesson {
+  display: grid;
+  grid-template-columns: minmax(0, 1.1fr) minmax(0, 0.9fr);
+  gap: 30px;
+  align-items: start;
+}
+.retained-topic > .chapter-subtitle {
+  grid-column: 1/-1;
+  margin: 0 !important;
+}
+.retained-topic .drawing-surface {
+  margin: 0;
+}
+.retained-topic .principles {
+  padding-top: 0;
+}
+.retained-topic.static-lesson {
+  grid-template-columns: 1fr;
+}
+.retained-topic.static-lesson .principles {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 20px;
+}
+.retained-topic.static-lesson .design-link {
+  grid-column: 1/-1;
+}
+@media (max-width: 1000px) {
+  .retained-topic.lesson {
+    grid-template-columns: 1fr;
+  }
+  .retained-topic.static-lesson .principles {
+    grid-template-columns: 1fr;
+  }
+}
+.room-image {
+  margin: 0 0 20px;
+  border: 1px solid #7895a82d;
+}
+.room-image img {
+  display: block;
+  width: 100%;
+  max-height: 220px;
+  object-fit: contain;
+}
+.room-image figcaption {
+  font-size: 9px;
+  line-height: 1.8;
+  padding: 10px;
+  color: #91a7b9;
+}

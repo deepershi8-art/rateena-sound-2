@@ -2,7 +2,7 @@
 
 A working, desktop-first React + TypeScript engineering workspace for the Cairo studio project. This is a separate application codebase; no files or repositories belonging to the earlier Cairo investor app were touched.
 
-The original owner brief is preserved in `docs/MASTER-PROMPT.md`. Later owner clarifications retain the premium design and the content explicitly supplied in the brief, defer Arabic, and supply an official logo. No unapproved floor plan or invented engineering result is included.
+The original owner brief is preserved in `docs/MASTER-PROMPT.md`. Later owner clarifications retain the premium design and the content explicitly supplied in the brief, defer Arabic, and supply an official logo. The owner’s subsequent existing-application update is preserved verbatim in `docs/EXISTING-APPLICATION-UPDATE.md`. The current floor plan is a clearly proposed true-scale spatial study, not an approved footprint. No engineering result or compliance claim is invented.
 
 ## Local development
 
@@ -17,25 +17,21 @@ npm test
 
 Vite serves `http://localhost:5173/rateena-sound-2/`. `npm run preview` serves the production build. Routing uses `HashRouter`, so static hosting does not require route rewrites. Fonts are bundled locally; the application does not require third-party font requests.
 
-## Implemented
+## Implemented — progressive existing-application update
 
-- Editorial luxury-audio identity: near-black surfaces, large high-contrast serif typography, restrained metallic-gold headlines, steel-blue Phase Two, oversized chapter numerals, square hairline frames, image-free facility panels, subtle staggered reveals and grain. Desktop/tablet/mobile layouts and reduced-motion support are retained.
-- Exactly two primary home sections: **Project Management** and **Technical Study & Knowledge**. Exactly two independent facility cards. No Knowledge top-level section or Studio Introduction page.
-- Project Management visibly **Under Construction**. Expandable empty structures for tasks, milestones, deliverables, dependencies, risks, budget, contractors, documents and approvals; no invented operational data.
-- Flagship opens directly on **Knowledge** and has exactly two main tabs. **Technical Study** opens directly on Architectural Proposal, independently of chapter completion.
-- Knowledge chapters covering every topic supplied in the brief. Animated stroke-draw diagrams and progressive reveals; Chapter **02.1 is static** with no controls, animation or audio inside its lesson. Normal book navigation remains outside the lesson. Every chapter links principles to a design decision.
-- All 10 Technical Study sections, including the preliminary strategy text, requirements and caveats explicitly described in the master prompt.
-- Empty metric drawing workspace with the exact pending-approval status; zoom, drag-pan, 1:50/1:100/1:200 selector, metre grid, scale bar, layer visibility and drawing revision. No explanatory overlays or fabricated plan.
-- Separate five-room list and a six-tab side information panel. Editable clear room dimensions; save commits a revision and updates net area, volume, normalised proportions and axial estimates wherever displayed.
-- The exact five-room programme: one Main Live Room, three isolation rooms and one Control Room. Initial total **179.54 m²**, approximately **179.5 m²**. Finished clear-height, preliminary-only, area-exclusion, capacity and building-area-TBD qualifications retained.
-- Golden / published Sepmeyer A, B, C comparison tools, source records, a clearly qualitative Bolt illustration with **no pass/fail test**, and explicit Golden/non-parallel-wall limitations.
-- First four axial modes per axis using `f = n × 343 / (2D)`. Clearly an ideal rectangular-reference approximation, not a simulation of an irregular finished room.
-- Typed model for projects, facilities, rooms, metric geometry, walls/thickness, polygons/angles, openings/acoustic doors, sound locks, sightlines, circulation, dimensions, layers, references, targets, calculations, verification results, decisions and revisions.
-- Shoelace polygon area, point-angle and wall-angle utilities with unit tests.
-- Proposed/Calculated/Simulated/Measured/Verified type system and expandable evidence records: source, method, assumptions, date/revision, discipline and outstanding validation. No simulated, measured or verified initial results.
-- Scope-only reference library: ISO 3382-1/-2, ISO 16283-1/-3, ISO 717-1, NC/RC; no invented clauses or certification. NC-15 remains **Proposed aspiration only**.
-- Pending-validation register with review state and notes; decision recording; revision history; localStorage schema v1; JSON import/export with validation and confirmation; downloadable preliminary Markdown report; SVG export of the current empty canvas.
-- Honest future-integration dialogs and Phase Two empty states.
+- Existing luxury editorial branding, logo, typography, navigation components and local study records retained; this is not a replacement app.
+- Exactly two gateways: **Project Management** and **RATEENA SOUND**. RATEENA SOUND contains exactly **RATEENA SOUND FLAGSHIP STUDIO** and **RATEENA SOUND CENTER**. Project Management retains its nine empty future modules.
+- Flagship has exactly **Knowledge** and **Technical Study** tabs; no Introduction page. Knowledge has five chapters: Understanding Sound; Sound Isolation; Internal Acoustics; Acoustic Terminology; International Standards. All earlier topics, illustrations and progressive reveals are retained within the new chapters; earlier deep links remain functional. 02.1 remains entirely static inside its lesson.
+- Three-stage isolation construction model uses the live room’s preliminary proportions and one fixed camera: structural shell → independent inner envelope → floating floor/continuity. Wall, floor and ceiling principles are separate. Mass–Decoupling–Damping and floating construction complement the integrated Room-in-Room intent; no universal springs or common isolated raft are asserted.
+- Technical Study opens on the **eight-room selectable true-scale floor plan**. One SVG unit equals one metre. Actual room rectangles match supplied dimensions; tiny 7.5 m² booths remain tiny beside the 99.96 m² live-room envelope. A working 5 m scale bar, metre-grid toggle, real-scale wall zones, doors and typical instruments/furniture, zoom/pan, fullscreen, layer preferences and physical-scale SVG export are included.
+- Eight current net-area targets: Live 100; Control 24.5; Percussion 18; Bass/Rhythm 7.5; Vocal 7.5; Equipment 8; Storage 10; Lounge & Services 70 m². Heights remain unknown where not supplied. WC Men/Women are included in Lounge & Services. Target areas and calculated rectangle areas are distinguished.
+- Every selected room has seven tabs: Overview; Architecture; Sound Isolation; Internal Acoustics; Infrastructure; Equipment; Documents. Dimensions, capacity notes, study findings and evidence statuses can be edited locally. The concept reference image appears outside the canvas and in Documents. Add local images/diagrams/specifications/documents; no backend upload is implied.
+- Six expandable technical sections follow the plan: Studio-wide Isolation Architecture; HVAC and Environmental Control; Electrical, Audio and Network Infrastructure; Construction Coordination; Equipment Planning; Engineering References and Verification. Missing actual findings remain editable placeholders.
+- Center has five expandable, editable organizational placeholders: Specialized Audio Production Facilities; Additional Recording Studios — Coming Later; Supporting Technical Facilities; Shared Infrastructure and Services; Future Departments and Expansion. These are not confirmed facility specifications.
+- Existing Golden / published Sepmeyer A/B/C comparisons, qualitative Bolt illustration, rectangular axial modes, non-parallel-wall caveats, NC-15 aspiration, targets, decisions, verification registers, references and earlier ten-section text are retained in clearly labelled earlier-study views. No initial Simulated, Measured or Verified outcomes.
+- Evidence status system: Proposed / Calculated / Simulated / Measured / Verified. Applicable ISO scopes plus IEC 61672-1, IEC 61260-1, ITU-R BS.1116 and EBU Tech 3276; no certification assertion.
+- **Schema v2** adds a separate current programme, resources, notes and preferences while preserving all five earlier rooms and all edited values, decisions and revisions. The old `rateena-sound-2:v1` browser key is left untouched. Corrupt saved data is not silently overwritten. JSON import accepts v1 and v2; export includes both current and retained records. Local attachments are embedded in JSON backups.
+- The concept’s footprint conflicts are explicit, not concealed: 12 × 14.18 m cannot contain the stated 245.5 m² net targets; vertical bands total 20.03 m. See `docs/CLARIFICATIONS.md`. Equipment/storage shapes, wall zones and access strips are explicit diagram assumptions, not fabricated approved specifications.
 
 ## Official logo
 
@@ -47,7 +43,7 @@ The supplied original `src/assets/logo/rateena-official.jpg` is used in the shar
 npm run build:offline
 ```
 
-This produces `dist-offline/index.html`: a self-contained application with inlined JavaScript, CSS, logo and bundled fonts. Open it directly in a modern browser using `file://`; no server or internet connection is required to use the app. Engineering source links naturally require internet if opened. HashRouter keeps navigation within the file.
+This produces `dist-offline/index.html`: a self-contained application with inlined JavaScript, CSS, official logo, concept reference image and bundled fonts. Open it directly in a modern browser using `file://`; no server or internet connection is required to use the app. Engineering source links naturally require internet if opened. HashRouter keeps navigation within the file.
 
 The delivered standalone copy is `/workspace/artifacts/RATEENA-SOUND-2.html`; the complete source archive is `/workspace/artifacts/rateena-sound-2-source.zip` (no node_modules or build output). Browser policies for local-file storage vary; JSON export/import remains the portable backup mechanism. To enable reliable shared persistence, use the hosted app or a local web server.
 
@@ -62,13 +58,13 @@ The delivered standalone copy is `/workspace/artifacts/RATEENA-SOUND-2.html`; th
 - Phase Two engineering programme and study content.
 - Arabic UI, deferred in the latest owner clarification. Logical CSS and a label boundary preserve a path to future RTL support.
 
-The SVG export is the current **empty drafting view**, not a technical floor-plan deliverable. Screen zoom and display calibration affect apparent scale; the export uses millimetre SVG units and the selected nominal scale at 100% zoom. Do not measure a browser screen with a ruler.
+The SVG export is the current **provisional spatial study**, not an approved construction deliverable. Screen zoom and display calibration affect apparent scale; the export uses millimetre SVG units and the selected nominal scale at 100% zoom. Do not measure a browser screen with a ruler.
 
 ## Data and evidence limits
 
 Room dimensions are proposed reference envelopes, not approved construction dimensions. Derived values are calculated, not measured. The exact formula and input assumptions accompany results. Changes are committed with the Save button, not every uncommitted keystroke. The layer toggle changes local project revision history, not the approved drawing revision.
 
-Import is for this v1 application's empty-plan state; it deliberately refuses imported drawn geometry, unrecognised schema versions and altered room counts. Keep exported JSON backups. Local storage is device/browser specific, not a remote database.
+Import accepts v1/v2 project data; it preserves the old pending approved-geometry record separately from the derived, provisional concept spatial study. Arbitrary CAD/approved geometry import remains a future integration. Keep exported JSON backups. Local storage is device/browser specific, not a remote database.
 
 Timestamps are shown in **Africa/Cairo**; persisted instants use ISO timestamps.
 
@@ -84,7 +80,7 @@ Primary research identifiers: Sepmeyer (1965), <https://doi.org/10.1121/1.190934
 
 ## QA
 
-`npm run build` type-checks and compiles production assets. `npm test` runs Vitest geometry, schema and component interaction tests. DOM component tests are not a visual-browser inspection. The screenshot/browser hand-off, including the six required routes, is in `docs/SCREENSHOT-BRIEF.md`. The visual redesign was rendered with Playwright’s isolated bundled Chromium. Desktop and mobile screenshots are in `docs/screens/` and were visually reviewed. The viewport matrix checks 320, 390, 768, 1024 and 1440 px across home, Knowledge, architectural proposal and geometry views, with no document overflow. See `docs/QA-RESULTS.md`.
+`npm run build` type-checks and compiles production assets. `npm test` runs Vitest geometry, schema and component interaction tests. DOM component tests are not a visual-browser inspection. The screenshot/browser hand-off, including earlier required routes, is in `docs/SCREENSHOT-BRIEF.md`. The visual redesign was rendered with Playwright’s isolated bundled Chromium. Desktop and mobile screenshots are in `docs/screens/` and were visually reviewed. The viewport matrix checks 320, 390, 768, 1024 and 1440 px across home, Knowledge, architectural proposal and geometry views, with no document overflow. See `docs/QA-RESULTS.md`.
 
 
 To reproduce visual QA (against the local production preview):
@@ -102,7 +98,7 @@ These scripts launch a fresh isolated headless test browser, not a saved desktop
 
 ## Static deployment preparation
 
-Vite base is `/rateena-sound-2/`. A GitHub Pages Actions workflow is prepared at `.github/workflows/pages.yml`; it runs tests and builds before deployment. A future repository's Pages source must be GitHub Actions.
+Vite base is `/rateena-sound-2/`. A GitHub Pages Actions workflow is prepared at `.github/workflows/pages.yml`; it runs tests and builds before deployment. The existing repository uses GitHub Actions as its Pages source.
 
 The owner approved public publication of this application. Target repository: <https://github.com/deepershi8-art/rateena-sound-2>. Target Pages URL: <https://deepershi8-art.github.io/rateena-sound-2/>. See the QA record for deployment verification. The earlier Cairo application repository remains untouched.
 

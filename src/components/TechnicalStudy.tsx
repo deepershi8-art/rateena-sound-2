@@ -1,117 +1,108 @@
-import { useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import { ChevronDown, FolderOpen } from "lucide-react";
-import { PlanWorkspace } from "./PlanWorkspace";
+import { FolderOpen } from "lucide-react";
+import { ConceptPlanWorkspace } from "./ConceptPlanWorkspace";
+import { LegacyStudy, strategies as earlierStrategies } from "./LegacyStudy";
 import {
-  RoomProgramme,
-  GeometryAnalysis,
-  References,
+  Badge,
   Targets,
   Verification,
+  References,
   Decisions,
+  RoomProgramme,
+  GeometryAnalysis,
 } from "./Engineering";
+import { EditableNote, ResourceManager } from "./StudyFields";
+import { IsolationAssemblyNotes } from "./IsolationModel";
+import { useProject } from "../lib/store";
 const sections = [
   [
-    "architectural",
-    "Architectural Proposal",
-    "Metric workspace & room information",
-  ],
-  ["programme", "Room Program & Capacity", "Five preliminary room envelopes"],
-  ["geometry", "Acoustic Geometry & Analysis", "Compare reference proportions"],
-  [
     "isolation",
-    "Sound Isolation Strategy",
-    "Boundary and flanking-path strategy",
+    "Studio-wide Isolation Architecture",
+    "Integrated Room-in-Room / Box-in-Box isolation. Develop Mass–Decoupling–Damping, room-specific floating construction, airtightness, junctions and flanking control together. No universal spring floor or single isolated platform is specified.",
   ],
   [
-    "treatment",
-    "Acoustic Treatment Strategy",
-    "Internal reflections and decay",
+    "hvac",
+    "HVAC and Environmental Control",
+    "NC-15 remains a Proposed aspiration only. Assess duct noise, cross-talk, terminal noise, plant vibration, airflow, pressure loss and environmental conditions with the services engineer and acoustician.",
   ],
-  ["hvac", "HVAC & Background Noise", "Quiet services and vibration control"],
-  ["audio", "Audio Systems & Connectivity", "Future signal-flow coordination"],
+  [
+    "audio",
+    "Electrical, Audio and Network Infrastructure",
+    "Coordinate electrical distribution, earthing, audio wiring, patching, signal flow, data networks and lighting. Equipment schedules, routes and room interfaces are pending; no invented package is supplied.",
+  ],
   [
     "construction",
     "Construction Coordination",
-    "Interfaces and engineering handovers",
+    "Pending site survey, structure, finished clear dimensions, isolation allowances, circulation, sound locks, fire safety, accessibility, door swings, services coordination and approval workflows.",
+  ],
+  [
+    "equipment",
+    "Equipment Planning",
+    "Actual equipment schedules and requirements will be added later. Typical objects in the drawing are real-size fit references only; they are not procurement selections or capacity commitments.",
   ],
   [
     "verification",
-    "International References & Verification",
-    "Scopes, targets and validation",
+    "Engineering References and Verification",
+    "References have distinct scopes. Distinguish Proposed, Calculated, Simulated, Measured and Verified values; simulations, test methods, commissioning and supporting evidence remain to be entered.",
   ],
-  ["decisions", "Design Decisions & Revision History", "Local design record"],
 ];
-const strategies: Record<
-  string,
-  { title: string; intro: string; items: string[] }
-> = {
-  isolation: {
-    title: "Sound Isolation Strategy",
-    intro:
-      "Control transmission between spaces — including paths that bypass the main wall.",
-    items: [
-      "Define source spectra and receiving-room needs before setting frequency-dependent isolation requirements.",
-      "Develop mass, decoupling, damping and airtightness as a coordinated assembly.",
-      "Review room-within-room feasibility, structural bridges, doors, seals, windows and service penetrations.",
-      "Validate junctions and flanking paths; commission appropriate field tests. No achieved isolation rating is claimed.",
-    ],
-  },
-  treatment: {
-    title: "Acoustic Treatment Strategy",
-    intro:
-      "Control sound inside the room, without confusing treatment with isolation.",
-    items: [
-      "Develop room-specific, frequency-band decay targets. No numerical reverberation target is approved.",
-      "Evaluate low-frequency control, early reflections, absorption and diffusion as a system.",
-      "Assess repeatable variable-acoustic states for the Main Live Room.",
-      "Treatment layout, quantities and simulation are future engineering deliverables.",
-    ],
-  },
-  hvac: {
-    title: "HVAC & Background Noise",
-    intro:
-      "Quiet services need acoustic and mechanical coordination from the beginning.",
-    items: [
-      "NC-15 is a Proposed aspiration only, not a measured or achieved result.",
-      "Assess duct-borne noise, cross-talk, terminal noise, plant vibration and structural connections.",
-      "Coordinate airflow and pressure loss with attenuation and vibration isolation.",
-      "Confirm octave-band targets and commissioning methods with the services engineer and acoustician.",
-    ],
-  },
-  audio: {
-    title: "Audio Systems & Connectivity",
-    intro:
-      "Expandable coordination structure. No equipment package or signal-flow design has been invented.",
-    items: [
-      "Future integration: equipment schedules and signal-flow documentation.",
-      "Future integration: analogue, digital and network patching records.",
-      "Future integration: cable routes, power, earthing and service interfaces.",
-      "Pending design: control-room monitoring, talkback and cross-room connectivity.",
-    ],
-  },
-  construction: {
-    title: "Construction Coordination",
-    intro:
-      "The acoustic design must become a coordinated, buildable set of details.",
-    items: [
-      "Pending: site survey, structural review and building services interfaces.",
-      "Pending: finished clear dimensions and isolation shell allowances.",
-      "Pending: fire safety, accessibility, circulation and door coordination.",
-      "Future integration: formal document control, consultant reviews and approval workflows.",
-    ],
-  },
-};
+export function CurrentProgramme() {
+  const { data } = useProject();
+  return (
+    <details className="tool-block">
+      <summary>Current preliminary room programme / eight rooms</summary>
+      <div className="table-scroll">
+        <table>
+          <thead>
+            <tr>
+              <th>Room</th>
+              <th>Target m²</th>
+              <th>Clear envelope m</th>
+              <th>Drawn m²</th>
+              <th>Basis</th>
+            </tr>
+          </thead>
+          <tbody>
+            {data.programme.map((r) => (
+              <tr key={r.id}>
+                <td>{r.name}</td>
+                <td>{r.areaTarget}</td>
+                <td>
+                  {r.length.toFixed(2)} × {r.width.toFixed(2)}
+                  {r.height !== null
+                    ? ` × ${r.height.toFixed(2)} H`
+                    : " · H pending"}
+                </td>
+                <td>{(r.length * r.width).toFixed(2)}</td>
+                <td>
+                  {r.dimensionBasis === "area-derived"
+                    ? "Area-derived assumption"
+                    : r.dimensionBasis === "concept"
+                      ? "Concept — Proposed"
+                      : "Owner edited — Proposed"}
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+      <p className="notice">
+        Provisional net-area targets, not verified construction dimensions.
+        Lounge & Services includes toilets and supporting facilities. Walls,
+        cavities, circulation and services require additional gross area.
+        Footprint TBD.
+      </p>
+    </details>
+  );
+}
 export function TechnicalStudy() {
   const { section = "architectural" } = useParams();
   const navigate = useNavigate();
-  const [collapsed, setCollapsed] = useState<string | null>(null);
-  const selected = sections.some((s) => s[0] === section)
-    ? section
-    : "architectural";
-  const strategy = strategies[selected];
+  const oldRoute = ["programme", "geometry", "treatment", "decisions"].includes(
+    section,
+  );
   return (
-    <div className="study-layout">
+    <div className="study-layout updated-study-layout">
       <aside className="study-index">
         <div className="rail-heading">
           <FolderOpen size={15} />
@@ -119,27 +110,46 @@ export function TechnicalStudy() {
         </div>
         <p className="muted small">A proposal with a traceable basis.</p>
         <nav aria-label="Technical study sections">
-          {sections.map((s, i) => (
-            <details
-              key={s[0]}
-              open={selected === s[0] && collapsed !== s[0]}
-              className={selected === s[0] ? "selected" : ""}
+          <button
+            className={`study-plan-link ${section === "architectural" ? "selected" : ""}`}
+            onClick={() => navigate("/flagship/study/architectural")}
+          >
+            <span>00</span>
+            <b>Flagship Studio Floor Plan</b>
+          </button>
+          {sections.map(([id, name], i) => (
+            <a
+              key={id}
+              className={section === id ? "selected" : ""}
+              href={`#/flagship/study/${id}`}
+              onClick={() =>
+                setTimeout(
+                  () =>
+                    document
+                      .getElementById(`study-${id}`)
+                      ?.scrollIntoView({ behavior: "smooth", block: "start" }),
+                  60,
+                )
+              }
             >
-              <summary
-                onClick={(e) => {
-                  e.preventDefault();
-                  setCollapsed(selected === s[0] && collapsed !== s[0] ? s[0] : null);
-                  navigate(`/flagship/study/${s[0]}`);
-                }}
-              >
-                <span>{String(i + 1).padStart(2, "0")}</span>
-                <b>{s[1]}</b>
-                <ChevronDown size={12} />
-              </summary>
-              <p>{s[2]}</p>
-            </details>
+              <span>{String(i + 1).padStart(2, "0")}</span>
+              <b>{name}</b>
+            </a>
           ))}
         </nav>
+        <details className="retained-index">
+          <summary>Earlier study / retained</summary>
+          {[
+            ["programme", "Earlier Room Program & Capacity"],
+            ["geometry", "Acoustic Geometry & Analysis"],
+            ["treatment", "Acoustic Treatment Strategy"],
+            ["decisions", "Design Decisions & Revision History"],
+          ].map(([id, name]) => (
+            <button key={id} onClick={() => navigate(`/flagship/study/${id}`)}>
+              {name}
+            </button>
+          ))}
+        </details>
         <div className="rail-foot">
           PRELIMINARY DESIGN
           <br />
@@ -147,42 +157,91 @@ export function TechnicalStudy() {
         </div>
       </aside>
       <main className="study-content">
-        {selected === "architectural" && <PlanWorkspace />}
-        {selected === "programme" && <RoomProgramme />}
-        {selected === "geometry" && <GeometryAnalysis />}
-        {selected === "decisions" && <Decisions />}
-        {selected === "verification" && (
-          <div className="content-panel">
-            <div className="section-kicker">EVIDENCE FRAMEWORK</div>
-            <h2>References & verification</h2>
-            <p className="intro-text">A target is not a result.</p>
-            <Targets />
-            <Verification />
-            <h2>Reference library</h2>
-            <References />
-          </div>
-        )}
-        {strategy && (
-          <div className="content-panel">
-            <div className="section-kicker">DESIGN STRATEGY / PRELIMINARY</div>
-            <h2>{strategy.title}</h2>
-            <p className="intro-text">{strategy.intro}</p>
-            <div className="strategy-list">
-              {strategy.items.map((item, i) => (
-                <div key={item}>
-                  <span>0{i + 1}</span>
-                  <p>{item}</p>
-                </div>
-              ))}
-            </div>
-            {["hvac", "treatment", "isolation"].includes(selected) && (
-              <Targets />
-            )}
+        {oldRoute ? (
+          <>
             <p className="notice">
-              Engineering development is pending. No design performance has been
-              simulated, measured or verified.
+              Preserved earlier study. These original reference rooms and
+              calculations are not the current eight-room concept programme.{" "}
+              <button
+                className="text-button"
+                onClick={() => navigate("/flagship/study/architectural")}
+              >
+                Return to current floor plan
+              </button>
             </p>
-          </div>
+            <LegacyStudy />
+          </>
+        ) : (
+          <>
+            <ConceptPlanWorkspace />
+            <CurrentProgramme />
+            <section className="progressive-study">
+              <div className="section-kicker">
+                AFTER THE PLAN / PROGRESSIVE TECHNICAL STUDY
+              </div>
+              <h2>Engineering development</h2>
+              {sections.map(([id, name, intro], i) => (
+                <details
+                  key={id}
+                  id={`study-${id}`}
+                  className="tool-block study-section"
+                  open={section === id}
+                >
+                  <summary>
+                    <span className="study-section-number">
+                      {String(i + 1).padStart(2, "0")}
+                    </span>
+                    {name}
+                    <Badge />
+                  </summary>
+                  <p className="intro-text">{intro}</p>
+                  {id === "isolation" && <IsolationAssemblyNotes />}
+                  {id === "verification" && (
+                    <>
+                      <Targets />
+                      <Verification />
+                      <References />
+                    </>
+                  )}
+                  <div className="empty-inline">
+                    Actual findings, specifications and coordinated diagrams —
+                    pending.
+                  </div>
+                  <EditableNote
+                    noteKey={`study:${id}`}
+                    label={`${name} findings`}
+                  />
+                </details>
+              ))}
+              <ResourceManager />
+              <details className="tool-block">
+                <summary>
+                  Preserved earlier study / original ten-section record
+                </summary>
+                <p>
+                  Existing content is retained. Earlier five-room dimensions are
+                  reference data, not an alternative current programme.
+                </p>
+                <RoomProgramme />
+                <GeometryAnalysis />
+                {Object.values(earlierStrategies).map((s) => (
+                  <section key={s.title}>
+                    <h3>{s.title}</h3>
+                    <p>{s.intro}</p>
+                    <ul>
+                      {s.items.map((item) => (
+                        <li key={item}>{item}</li>
+                      ))}
+                    </ul>
+                  </section>
+                ))}
+                <Targets />
+                <Verification />
+                <References />
+                <Decisions />
+              </details>
+            </section>
+          </>
         )}
       </main>
     </div>

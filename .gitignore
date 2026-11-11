@@ -5,3 +5,5 @@ dist
 dist-offline
 
 *.tsbuildinfo
+
+docs/incoming/

@@ -3,7 +3,7 @@ import type { ReactNode } from "react";
 const english = {
   home: "Workspace",
   management: "Project Management",
-  studyKnowledge: "Technical Study & Knowledge",
+  studyKnowledge: "RATEENA SOUND",
   underConstruction: "Under Construction",
   knowledge: "Knowledge",
   technicalStudy: "Technical Study",

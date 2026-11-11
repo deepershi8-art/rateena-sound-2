@@ -9,6 +9,7 @@ import "@fontsource/cormorant-garamond/latin-400-italic.css";
 import App from "./App";
 import "./styles.css";
 import "./editorial.css";
+import "./progressive.css";
 class ErrorBoundary extends React.Component<
   { children: React.ReactNode },
   { failed: boolean }

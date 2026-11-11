@@ -1,4 +1,4 @@
-import type { AppData, Evidence } from "../lib/types";
+import type { LegacyData, Evidence } from "../lib/types";
 export const initialEvidence: Evidence = {
   status: "Proposed",
   source: "Owner’s master application brief, §8–11",
@@ -19,7 +19,7 @@ export const qualifications = [
   "Capacities require equipment-layout and circulation validation.",
   "Control Room and booth dimensions have not yet passed acoustic optimisation.",
 ];
-export const initialData: AppData = {
+export const initialData: LegacyData = {
   schemaVersion: 1,
   projects: [
     {

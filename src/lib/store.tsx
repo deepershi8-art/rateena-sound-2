@@ -1,90 +1,14 @@
 import { createContext, useContext, useState, useEffect } from "react";
 import type { ReactNode } from "react";
-import type { AppData, Room } from "./types";
+import type { AppData, Room, ProgrammeRoom } from "./types";
 import { initialData } from "../data/initial";
-const KEY = "rateena-sound-2:v1";
-export function validateData(value: unknown): asserts value is AppData {
-  const d = value as AppData;
-  if (
-    !d ||
-    d.schemaVersion !== 1 ||
-    !Array.isArray(d.rooms) ||
-    d.rooms.length !== 5 ||
-    !d.geometry ||
-    !Array.isArray(d.revisions) ||
-    !Array.isArray(d.decisions) ||
-    !Array.isArray(d.verification) ||
-    !Array.isArray(d.references) ||
-    !Array.isArray(d.targets) ||
-    !Array.isArray(d.projects) ||
-    !Array.isArray(d.facilities) ||
-    !Array.isArray(d.verificationResults)
-  )
-    throw new Error("Invalid project file or unsupported schema version.");
-  if (
-    new Set(d.rooms.map((r) => r.id)).size !== 5 ||
-    initialData.rooms.some((r) => !d.rooms.some((s) => r.id === s.id))
-  )
-    throw new Error("The five-room programme must be preserved.");
-  for (const r of d.rooms) {
-    if (
-      [r.length, r.width, r.height].some(
-        (v) =>
-          typeof v !== "number" || !Number.isFinite(v) || v <= 0 || v > 200,
-      ) ||
-      typeof r.name !== "string" ||
-      typeof r.use !== "string" ||
-      !r.evidence ||
-      !["Proposed", "Calculated", "Simulated", "Measured", "Verified"].includes(
-        r.evidence.status,
-      )
-    )
-      throw new Error("Invalid room dimensions or evidence.");
-  }
-  // This version deliberately cannot approve or import a final plan.
-  if (
-    d.geometry.approval !== "pending" ||
-    [
-      "walls",
-      "polygons",
-      "openings",
-      "soundLocks",
-      "routes",
-      "dimensions",
-    ].some(
-      (k) =>
-        !Array.isArray(d.geometry[k as keyof typeof d.geometry]) ||
-        (d.geometry[k as keyof typeof d.geometry] as unknown[]).length !== 0,
-    )
-  )
-    throw new Error(
-      "Approved drawing import is a future integration. This version accepts only an empty, pending drawing.",
-    );
-  if (
-    !Array.isArray(d.geometry.layers) ||
-    d.geometry.layers.some(
-      (l) => typeof l.id !== "string" || typeof l.visible !== "boolean",
-    )
-  )
-    throw new Error("Invalid layers.");
-  for (const t of d.targets)
-    if (!t.target?.evidence || typeof t.name !== "string")
-      throw new Error("Invalid design targets.");
-  for (const v of d.verification)
-    if (
-      typeof v.id !== "string" ||
-      typeof v.title !== "string" ||
-      !["Pending", "In review"].includes(v.stage) ||
-      typeof v.note !== "string"
-    )
-      throw new Error("Invalid verification items.");
-  for (const v of d.decisions)
-    if (typeof v.text !== "string" || typeof v.date !== "string")
-      throw new Error("Invalid decision record.");
-  for (const v of d.revisions)
-    if (typeof v.description !== "string" || typeof v.number !== "number")
-      throw new Error("Invalid revision history.");
-}
+import {
+  LEGACY_KEY,
+  STORAGE_KEY,
+  normaliseData,
+  upgradeLegacy,
+} from "./migration";
+export { validateData } from "./migration";
 export function download(
   name: string,
   content: string,
@@ -100,9 +24,17 @@ export function download(
 interface Store {
   data: AppData;
   error: string;
+  savingBlocked: boolean;
   updateRoom: (
     id: string,
     patch: Pick<Room, "length" | "width" | "height">,
+  ) => void;
+  updateProgramme: (
+    id: string,
+    patch: Pick<
+      ProgrammeRoom,
+      "length" | "width" | "height" | "areaTarget" | "capacity"
+    >,
   ) => void;
   revise: (description: string, change: (d: AppData) => AppData) => void;
   importData: (text: string) => void;
@@ -110,39 +42,50 @@ interface Store {
 }
 const Context = createContext<Store | null>(null);
 export function Provider({ children }: { children: ReactNode }) {
-  const [error, setError] = useState("");
-  const [data, setData] = useState<AppData>(() => {
+  const [loaded] = useState(() => {
     try {
-      const raw = localStorage.getItem(KEY);
-      if (!raw) return structuredClone(initialData);
-      const d: unknown = JSON.parse(raw);
-      validateData(d);
-      return d;
+      const current = localStorage.getItem(STORAGE_KEY);
+      if (current)
+        return {
+          data: normaliseData(JSON.parse(current)),
+          safe: true,
+          error: "",
+        };
+      const old = localStorage.getItem(LEGACY_KEY);
+      return {
+        data: old ? normaliseData(JSON.parse(old)) : upgradeLegacy(initialData),
+        safe: true,
+        error: "",
+      };
     } catch {
-      return structuredClone(initialData);
+      return {
+        data: upgradeLegacy(initialData),
+        safe: false,
+        error:
+          "Saved data could not be read. The original stored file has been left untouched. Import a valid backup to resume saving; do not clear browser storage.",
+      };
     }
   });
+  const [data, setData] = useState<AppData>(loaded.data);
+  const [safe, setSafe] = useState(loaded.safe);
+  const [error, setError] = useState(loaded.error);
+  const [savingBlocked, setSavingBlocked] = useState(!loaded.safe);
   useEffect(() => {
+    if (!safe) return;
     try {
-      const raw = localStorage.getItem(KEY);
-      if (raw) validateData(JSON.parse(raw));
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
+      setSavingBlocked(false);
     } catch {
+      setSavingBlocked(true);
       setError(
-        "Saved data could not be read. A clean preliminary programme was loaded. Export a backup before continuing.",
+        "Local saving failed, possibly due to attachment size. Export JSON immediately to retain your changes.",
       );
     }
-  }, []);
-  useEffect(() => {
-    try {
-      localStorage.setItem(KEY, JSON.stringify(data));
-    } catch {
-      setError("Local saving failed. Export JSON to retain your changes.");
-    }
-  }, [data]);
+  }, [data, safe]);
   const revise = (description: string, change: (d: AppData) => AppData) =>
     setData((old) => {
       const next = change(structuredClone(old));
-      const number = (old.revisions.at(-1)?.number ?? 0) + 1;
+      const number = Math.max(0, ...old.revisions.map((r) => r.number)) + 1;
       return {
         ...next,
         revisions: [
@@ -161,7 +104,7 @@ export function Provider({ children }: { children: ReactNode }) {
     patch: Pick<Room, "length" | "width" | "height">,
   ) =>
     revise(
-      `Updated preliminary dimensions — ${data.rooms.find((r) => r.id === id)?.name}`,
+      `Updated retained earlier-study dimensions — ${data.rooms.find((r) => r.id === id)?.name}`,
       (d) => ({
         ...d,
         rooms: d.rooms.map((r) =>
@@ -172,9 +115,41 @@ export function Provider({ children }: { children: ReactNode }) {
                 evidence: {
                   ...r.evidence,
                   status: "Proposed",
-                  source: "Locally edited preliminary room data",
-                  date: new Date().toISOString().slice(0, 10),
-                  revision: (d.revisions.at(-1)?.number ?? 0) + 1,
+                  source: "Locally edited earlier-study reference data",
+                  date: sourceDate(),
+                  revision:
+                    Math.max(0, ...d.revisions.map((r) => r.number)) + 1,
+                },
+              }
+            : r,
+        ),
+      }),
+    );
+  const updateProgramme = (
+    id: string,
+    patch: Pick<
+      ProgrammeRoom,
+      "length" | "width" | "height" | "areaTarget" | "capacity"
+    >,
+  ) =>
+    revise(
+      `Updated current preliminary room — ${data.programme.find((r) => r.id === id)?.name}`,
+      (d) => ({
+        ...d,
+        planRevision: d.planRevision + 1,
+        programme: d.programme.map((r) =>
+          r.id === id
+            ? {
+                ...r,
+                ...patch,
+                dimensionBasis: "owner-edited",
+                evidence: {
+                  ...r.evidence,
+                  status: "Proposed",
+                  source: "Owner-edited preliminary room data",
+                  date: sourceDate(),
+                  revision:
+                    Math.max(0, ...d.revisions.map((r) => r.number)) + 1,
                 },
               }
             : r,
@@ -182,37 +157,39 @@ export function Provider({ children }: { children: ReactNode }) {
       }),
     );
   const importData = (text: string) => {
-    const incoming: unknown = JSON.parse(text);
-    validateData(incoming);
-    setData((old) => {
-      const number =
-        Math.max(
-          old.revisions.at(-1)?.number ?? 0,
-          incoming.revisions.at(-1)?.number ?? 0,
-        ) + 1;
-      return {
-        ...incoming,
-        revisions: [
-          ...old.revisions,
-          ...incoming.revisions.filter(
-            (r) => !old.revisions.some((o) => o.id === r.id),
-          ),
-          {
-            id: crypto.randomUUID(),
-            number,
-            date: new Date().toISOString(),
-            description: "Imported version 1 project data",
-          },
-        ],
-      };
-    });
+    const incoming = normaliseData(JSON.parse(text));
+    setData((old) => ({
+      ...incoming,
+      revisions: [
+        ...old.revisions,
+        ...incoming.revisions.filter(
+          (r) => !old.revisions.some((o) => o.id === r.id),
+        ),
+        {
+          id: crypto.randomUUID(),
+          number:
+            Math.max(
+              0,
+              ...old.revisions.map((r) => r.number),
+              ...incoming.revisions.map((r) => r.number),
+            ) + 1,
+          date: new Date().toISOString(),
+          description:
+            "Imported project data; version 1 files are upgraded without deleting their earlier study.",
+        },
+      ],
+    }));
+    setSafe(true);
+    setError("");
   };
   return (
     <Context.Provider
       value={{
         data,
         error,
+        savingBlocked,
         updateRoom,
+        updateProgramme,
         revise,
         importData,
         clearError: () => setError(""),
@@ -226,6 +203,14 @@ export function useProject() {
   const c = useContext(Context);
   if (!c) throw new Error("Missing Provider");
   return c;
+}
+export function sourceDate() {
+  return new Intl.DateTimeFormat("en-CA", {
+    timeZone: "Africa/Cairo",
+    year: "numeric",
+    month: "2-digit",
+    day: "2-digit",
+  }).format(new Date());
 }
 export function cairoDate(iso: string) {
   return (

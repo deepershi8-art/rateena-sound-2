@@ -29,6 +29,8 @@ import {
 } from "lucide-react";
 import { Provider, useProject, download, cairoDate } from "./lib/store";
 import { LanguageProvider, useI18n } from "./lib/i18n";
+import { conceptClarifications } from "./data/programme";
+import { EditableNote } from "./components/StudyFields";
 import { roomMetrics } from "./lib/geometry";
 import { Brand, OfficialLogo } from "./components/Brand";
 import { Knowledge } from "./components/Knowledge";
@@ -60,7 +62,23 @@ function DataActions() {
       "Architectural Drawing Pending — Geometry Not Yet Approved",
       "Building area: TBD. Not for construction.",
       "",
-      "## Room programme",
+      "## Current eight-room programme — Proposed",
+      ...data.programme.map(
+        (r) =>
+          `${r.name}: target ${r.areaTarget} m²; rectangular envelope ${r.length} × ${r.width} m (${(r.length * r.width).toFixed(2)} m² — Calculated); height ${r.height ?? "TBD"} m. Basis ${r.dimensionBasis}. ${r.evidence.source}. ${r.evidence.validation}`,
+      ),
+      "## Concept clarifications",
+      ...conceptClarifications,
+      "## Progressive study notes",
+      ...Object.entries(data.notes).map(
+        ([key, n]) => `${key} — ${n.status}: ${n.body}`,
+      ),
+      "## Local resources",
+      ...data.resources.map(
+        (r) =>
+          `${r.name} — ${r.kind}, ${r.status}, ${r.size} bytes; embedded in project JSON`,
+      ),
+      "## Preserved earlier five-room reference programme",
     ];
     for (const r of data.rooms) {
       const m = roomMetrics(r);
@@ -114,8 +132,10 @@ function DataActions() {
         <button
           title={t("export")}
           onClick={() => {
-            download("RATEENA-project-v1.json", JSON.stringify(data, null, 2));
-            setMessage("Version 1 project JSON exported.");
+            download("RATEENA-project-v2.json", JSON.stringify(data, null, 2));
+            setMessage(
+              "Version 2 project JSON exported; includes current programme and preserved earlier data.",
+            );
           }}
         >
           <Download size={14} />
@@ -137,8 +157,8 @@ function DataActions() {
           onChange={async (e) => {
             const f = e.target.files?.[0];
             if (f) {
-              if (f.size > 2_000_000)
-                setMessage("Import failed: maximum file size is 2 MB.");
+              if (f.size > 6_000_000)
+                setMessage("Import failed: maximum file size is 6 MB.");
               else setPending(await f.text());
             }
             e.target.value = "";
@@ -195,7 +215,7 @@ function DataActions() {
 }
 function Shell({ children }: { children: ReactNode }) {
   const { t } = useI18n();
-  const { error, clearError } = useProject();
+  const { error, clearError, savingBlocked } = useProject();
   return (
     <div className="app-shell">
       <header className="app-header">
@@ -203,7 +223,7 @@ function Shell({ children }: { children: ReactNode }) {
         <div className="header-right">
           <span className="local-indicator">
             <Check size={12} />
-            {t("local")}
+            {savingBlocked ? "LOCAL SAVE NEEDS ATTENTION" : t("local")}
           </span>
         </div>
       </header>
@@ -304,7 +324,10 @@ function Home() {
                 <span className="facility-index" aria-hidden="true">
                   01
                 </span>
-                <h3>Flagship Studio</h3>
+                <h3>
+                  <small className="project-prefix">RATEENA SOUND</small>
+                  FLAGSHIP STUDIO
+                </h3>
                 <p>
                   A focused recording facility.
                   <br />
@@ -329,7 +352,9 @@ function Home() {
                 <span className="facility-index" aria-hidden="true">
                   02
                 </span>
-                <h3>RATEENA Sound Center</h3>
+                <h3>
+                  <small className="project-prefix">RATEENA SOUND</small>CENTER
+                </h3>
                 <p>
                   A separate future facility.
                   <br />
@@ -363,7 +388,7 @@ function Flagship() {
           </Link>
           <div className="facility-title">
             <span className="gold-line" />
-            <h2>Flagship Studio</h2>
+            <h2>RATEENA SOUND FLAGSHIP STUDIO</h2>
             <span>{t("phaseOne")}</span>
           </div>
         </div>
@@ -417,7 +442,7 @@ function Centre() {
         <div className="section-kicker blue">
           PHASE TWO / SEPARATE FUTURE FACILITY
         </div>
-        <h1>RATEENA Sound Center</h1>
+        <h1>RATEENA SOUND CENTER</h1>
         <p className="intro-text">
           A distinct facility. Its own study, geometry and project record.
         </p>
@@ -426,10 +451,14 @@ function Centre() {
           data has been created.
         </div>
         {[
-          { icon: BookOpen, name: "Knowledge & technical references" },
-          { icon: PanelTop, name: "Architectural design workspace" },
-          { icon: Layers, name: "Room programme & engineering data" },
-          { icon: ShieldCheck, name: "Verification & decisions" },
+          { icon: BookOpen, name: "Specialized Audio Production Facilities" },
+          {
+            icon: PanelTop,
+            name: "Additional Recording Studios — Coming Later",
+          },
+          { icon: Layers, name: "Supporting Technical Facilities" },
+          { icon: ShieldCheck, name: "Shared Infrastructure and Services" },
+          { icon: Building2, name: "Future Departments and Expansion" },
         ].map((m) => (
           <details className="tool-block" key={m.name}>
             <summary>
@@ -438,8 +467,13 @@ function Centre() {
             </summary>
             <p>
               Empty structure for Phase Two. Future integration; independent of
-              Flagship Studio.
+              Flagship Studio. These are organizational placeholders, not
+              confirmed final facility specifications.
             </p>
+            <EditableNote
+              noteKey={`center:${m.name}`}
+              label={`${m.name} future scope`}
+            />
           </details>
         ))}
         <Link className="text-button blue" to="/">

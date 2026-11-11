@@ -126,7 +126,7 @@ export interface Revision {
   date: string;
   description: string;
 }
-export interface AppData {
+export interface LegacyData {
   schemaVersion: 1;
   projects: Project[];
   facilities: Facility[];
@@ -138,4 +138,51 @@ export interface AppData {
   verificationResults: TechnicalValue[];
   decisions: Decision[];
   revisions: Revision[];
+}
+
+export interface ProgrammeRoom {
+  id: string;
+  name: string;
+  shortName: string;
+  purpose: string;
+  areaTarget: number;
+  length: number;
+  width: number;
+  height: number | null;
+  dimensionBasis: "concept" | "area-derived" | "owner-edited";
+  capacity: string;
+  evidence: Evidence;
+}
+export interface ProjectResource {
+  id: string;
+  roomId: string | null;
+  kind: "image" | "diagram" | "specification" | "document";
+  name: string;
+  mime: string;
+  dataUrl: string;
+  size: number;
+  date: string;
+  status: Status;
+}
+export interface StudyNote {
+  body: string;
+  status: Status;
+  date: string;
+}
+export interface PlanPreferences {
+  grid: boolean;
+  furniture: boolean;
+  instruments: boolean;
+  doors: boolean;
+  dimensions: boolean;
+  labels: boolean;
+  walls: boolean;
+}
+export interface AppData extends Omit<LegacyData, "schemaVersion"> {
+  schemaVersion: 2;
+  programme: ProgrammeRoom[];
+  resources: ProjectResource[];
+  notes: Record<string, StudyNote>;
+  planRevision: number;
+  planPreferences: PlanPreferences;
 }
